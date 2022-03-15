@@ -7,7 +7,7 @@
 
 import Cocoa
 
-class ClocksViewController: NSViewController, NSTableViewDataSource, NSTableViewDelegate {
+class ClocksViewController: NSViewController {
     
     private let worldClocks: WorldClocks = .shared
     
@@ -17,6 +17,7 @@ class ClocksViewController: NSViewController, NSTableViewDataSource, NSTableView
     @IBOutlet weak var timeFormatMenu: NSPopUpButton!
 
     override func viewDidLoad() {
+        
         super.viewDidLoad()
 
         NotificationCenter.default.addObserver(self, selector: #selector(self.clockAdded), name: Notification.Name("clockAdded"), object: nil)
@@ -25,10 +26,6 @@ class ClocksViewController: NSViewController, NSTableViewDataSource, NSTableView
     
     @objc func clockAdded() {
         tableView.noteNumberOfRowsChanged()
-    }
-    
-    @objc func quit() {
-        NSApp.terminate(self)
     }
     
     deinit {
@@ -53,22 +50,8 @@ class ClocksViewController: NSViewController, NSTableViewDataSource, NSTableView
     
     @IBAction func doneAction(_ sender: Any) {
         
-        statusItem.menu = NSMenu()
-        
-        let item = NSMenuItem(title: "Quit", action: #selector(self.quit), keyEquivalent: "")
-        item.target = self
-        
-        statusItem.menu?.addItem(item)
-        
-        NSApp.setActivationPolicy(.accessory)
-        
-        Timer.scheduledTimer(withTimeInterval: 1, repeats: true) {_ in
-            self.updateTime()
-        }
-        
-        updateTime()
-        
         view.window?.windowController?.close()
+        NotificationCenter.default.post(name: Notification.Name("showClocksInMenuBar"), object: self)
     }
     
     private func updateTime() {
@@ -80,14 +63,17 @@ class ClocksViewController: NSViewController, NSTableViewDataSource, NSTableView
         
         self.statusItem.button?.title = timeStr
     }
+}
 
+extension ClocksViewController: NSTableViewDataSource, NSTableViewDelegate {
+    
     func numberOfRows(in tableView: NSTableView) -> Int {
         worldClocks.numberOfClocks
     }
     
     func tableView(_ tableView: NSTableView, viewFor tableColumn: NSTableColumn?, row: Int) -> NSView? {
         
-        guard row >= 0, row < worldClocks.numberOfClocks, let colID = tableColumn?.identifier else {return nil}
+        guard worldClocks.clocks.indices.contains(row), let colID = tableColumn?.identifier else {return nil}
         
         guard let cell = tableView.makeView(withIdentifier: colID, owner: nil) as? NSTableCellView else {return nil}
         
@@ -119,4 +105,3 @@ class ClocksViewController: NSViewController, NSTableViewDataSource, NSTableView
         return cell
     }
 }
-

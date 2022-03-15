@@ -27,6 +27,12 @@ class AddClockViewController: NSViewController, NSMenuDelegate {
         }
         
         selectedZone = WCTimeZone.allTimeZones[0]
+        
+        let location = selectedZone.location
+        let split = location.split(separator: "/")
+        let name = split.count >= 2 ? String(split.last!) : location
+        
+        txtZoneName.stringValue = name
     }
     
     @IBAction func zoneSelectionAction(_ sender: NSPopUpButton) {
