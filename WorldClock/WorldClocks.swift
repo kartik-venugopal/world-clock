@@ -13,35 +13,43 @@ class WorldClocks {
     
     private(set) var clocks: [Clock] = []
     
+    var format: TimeFormat = .hoursMinutes_AM_PM
+    
     var numberOfClocks: Int {
         clocks.count
     }
     
+    lazy var defaults: UserDefaults = .standard
+    
     private let decoder: JSONDecoder = JSONDecoder()
     private lazy var encoder: JSONEncoder = JSONEncoder()
     
-    private static let defaultsKey: String = "worldClock.savedClocks"
+    private static let defaultsKey_savedClocks: String = "worldClock.savedClocks"
+    private static let defaultsKey_timeFormat: String = "worldClock.timeFormat"
     
     private init() {
         
-        if let savedClocksData = UserDefaults.standard.object(forKey: Self.defaultsKey) as? Data,
+        if let savedClocksData = defaults.object(forKey: Self.defaultsKey_savedClocks) as? Data,
            let savedClocks = try? decoder.decode([Clock].self, from: savedClocksData) {
             
             self.clocks = savedClocks
+            
+        }
+        
+        if let savedFormatData = defaults.object(forKey: Self.defaultsKey_timeFormat) as? Data,
+           let savedFormat = try? decoder.decode(TimeFormat.self, from: savedFormatData) {
+            
+            self.format = savedFormat
         }
     }
     
     func addNewClock(_ newClock: Clock) {
-        
         clocks.append(newClock)
-        
-        let notification: Notification = Notification(name: Notification.Name("clockAdded"), object: self, userInfo: ["newClock": newClock])
-        NotificationCenter.default.post(notification)
     }
     
-    func removeClock(atIndex index: Int) {
+    func removeClocks(atIndices indices: [Int]) {
         
-        if clocks.indices.contains(index) {
+        for index in indices.sorted(by: >) {
             clocks.remove(at: index)
         }
     }
@@ -49,7 +57,11 @@ class WorldClocks {
     func save() {
         
         if let data = try? encoder.encode(clocks) {
-            UserDefaults.standard.set(data, forKey: Self.defaultsKey)
+            defaults.set(data, forKey: Self.defaultsKey_savedClocks)
+        }
+        
+        if let data = try? encoder.encode(format) {
+            defaults.set(data, forKey: Self.defaultsKey_timeFormat)
         }
     }
     

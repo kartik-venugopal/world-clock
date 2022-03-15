@@ -11,20 +11,74 @@ class ClocksViewController: NSViewController, NSTableViewDataSource, NSTableView
     
     private let worldClocks: WorldClocks = .shared
     
+    private lazy var statusItem: NSStatusItem = NSStatusBar.system.statusItem(withLength: NSStatusItem.variableLength)
+    
     @IBOutlet weak var tableView: NSTableView!
+    @IBOutlet weak var timeFormatMenu: NSPopUpButton!
 
     override func viewDidLoad() {
         super.viewDidLoad()
 
         NotificationCenter.default.addObserver(self, selector: #selector(self.clockAdded), name: Notification.Name("clockAdded"), object: nil)
+        timeFormatMenu.selectItem(withTag: worldClocks.format.rawValue)
     }
     
     @objc func clockAdded() {
         tableView.noteNumberOfRowsChanged()
     }
     
+    @objc func quit() {
+        NSApp.terminate(self)
+    }
+    
     deinit {
         NotificationCenter.default.removeObserver(self)
+    }
+    
+    @IBAction func changeTimeFormatAction(_ sender: NSPopUpButton) {
+        
+        guard let selectedItem = sender.item(at: sender.indexOfSelectedItem),
+              let timeFormat = TimeFormat(rawValue: selectedItem.tag) else {return}
+        
+        worldClocks.format = timeFormat
+    }
+    
+    @IBAction func removeClocksAction(_ sender: Any) {
+        
+        let selRows = tableView.selectedRowIndexes.sorted(by: >)
+        worldClocks.removeClocks(atIndices: selRows)
+        
+        tableView.reloadData()
+    }
+    
+    @IBAction func doneAction(_ sender: Any) {
+        
+        statusItem.menu = NSMenu()
+        
+        let item = NSMenuItem(title: "Quit", action: #selector(self.quit), keyEquivalent: "")
+        item.target = self
+        
+        statusItem.menu?.addItem(item)
+        
+        NSApp.setActivationPolicy(.accessory)
+        
+        Timer.scheduledTimer(withTimeInterval: 1, repeats: true) {_ in
+            self.updateTime()
+        }
+        
+        updateTime()
+        
+        view.window?.windowController?.close()
+    }
+    
+    private func updateTime() {
+        
+        let now = Date()
+        
+        let times = self.worldClocks.clocks.map {$0.time(for: now)}
+        let timeStr = times.joined(separator: "  |  ")
+        
+        self.statusItem.button?.title = timeStr
     }
 
     func numberOfRows(in tableView: NSTableView) -> Int {

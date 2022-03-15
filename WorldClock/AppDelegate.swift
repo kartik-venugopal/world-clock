@@ -33,10 +33,6 @@ class AppDelegate: NSObject, NSApplicationDelegate {
 //        parseHTML()
     }
     
-    func applicationShouldTerminateAfterLastWindowClosed(_ sender: NSApplication) -> Bool {
-        true
-    }
-    
 //    func parseHTML() {
 //        
 //        let contents = try! String(contentsOf: URL(fileURLWithPath: "/Users/kven/timeZones.html")).replacingOccurrences(of: "−", with: "-")
@@ -98,16 +94,8 @@ class AppDelegate: NSObject, NSApplicationDelegate {
 //        }
 //    }
     
-    @objc func quit() {
-        NSApp.terminate(self)
-    }
-
     func applicationWillTerminate(_ aNotification: Notification) {
         WorldClocks.shared.save()
-    }
-
-    func applicationSupportsSecureRestorableState(_ app: NSApplication) -> Bool {
-        return true
     }
 
     func parseCSV() {

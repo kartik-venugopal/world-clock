@@ -53,6 +53,9 @@ class AddClockViewController: NSViewController, NSMenuDelegate {
         let newClock = Clock(zone: selectedZone, name: txtZoneName.stringValue)
         worldClocks.addNewClock(newClock)
         
+        let notification: Notification = Notification(name: Notification.Name("clockAdded"), object: self, userInfo: ["newClock": newClock])
+        NotificationCenter.default.post(notification)
+        
         view.window?.windowController?.close()
     }
 }

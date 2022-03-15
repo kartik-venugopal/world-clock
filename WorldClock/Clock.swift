@@ -11,11 +11,8 @@ class Clock: Codable {
     
     var zone: WCTimeZone
     
-    var format: TimeFormat = .hoursMinutes_AM_PM {
-        
-        didSet {
-            formatter.dateFormat = format.formatString
-        }
+    private static var format: TimeFormat {
+        WorldClocks.shared.format
     }
     
     var name: String
@@ -24,24 +21,25 @@ class Clock: Codable {
        
         let formatter = DateFormatter()
         formatter.timeZone = zone.timeZone
-        formatter.dateFormat = format.formatString
+        formatter.dateFormat = Self.format.formatString
         
         return formatter
     }()
     
-    init(zone: WCTimeZone, name: String, format: TimeFormat = .hoursMinutes_AM_PM) {
+    init(zone: WCTimeZone, name: String) {
         
         self.zone = zone
-        self.format = format
         self.name = name
     }
     
     func time(for date: Date) -> String {
-        "\(name): \(formatter.string(from: date))"
+        
+        formatter.dateFormat = Self.format.formatString
+        return "\(name): \(formatter.string(from: date))"
     }
 }
 
-enum TimeFormat: String, Codable {
+enum TimeFormat: Int, Codable {
     
     case hoursMinutes_AM_PM
     case hoursMinutesSeconds_AM_PM
