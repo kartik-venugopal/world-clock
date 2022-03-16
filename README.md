@@ -11,6 +11,10 @@ Want to add multiple clocks to your macOS menu bar ? World Clock offers a simple
 ## Compatibility
 - macOS Sierra (10.12) or later, and both Intel and Apple Silicon Macs are supported.
 
+## Download
+
+Get the [latest release](https://github.com/kartik-venugopal/world-clock/releases/latest).
+
 ### World Clock settings interface
 
 ![World Clock settings screenshot](/Screenshots/WorldClock-Settings.png?raw=true)
