@@ -8,6 +8,9 @@ Want to add multiple clocks to your macOS menu bar ? World Clock offers a simple
 - Custom name for each clock, if you don't like the default name for the zone.
 - Re-order the clocks per your preferred order.
 
+## Compatibility
+- macOS Sierra (10.12) or later, and both Intel and Apple Silicon Macs are supported.
+
 ### World Clock settings interface
 
 ![World Clock settings screenshot](/Screenshots/WorldClock-Settings.png?raw=true)
