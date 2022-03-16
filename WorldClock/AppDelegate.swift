@@ -23,6 +23,8 @@ class AppDelegate: NSObject, NSApplicationDelegate {
         if worldClocks.numberOfClocks == 0 {
             showSettings()
         }
+        
+        NotificationCenter.default.addObserver(self, selector: #selector(self.updateClocks), name: Notification.Name("updateClocks"), object: nil)
     }
     
     func applicationWillTerminate(_ aNotification: Notification) {
@@ -46,13 +48,13 @@ class AppDelegate: NSObject, NSApplicationDelegate {
         NSApp.setActivationPolicy(.accessory)
         
         Timer.scheduledTimer(withTimeInterval: 1, repeats: true) {_ in
-            self.updateTime()
+            self.updateClocks()
         }
         
-        updateTime()
+        updateClocks()
     }
     
-    private func updateTime() {
+    @objc private func updateClocks() {
         
         guard worldClocks.numberOfClocks > 0 else {
         

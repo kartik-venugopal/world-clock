@@ -15,6 +15,7 @@
 		3E88E32727E13300004677DA /* WCTimeZone.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3E88E32627E13300004677DA /* WCTimeZone.swift */; };
 		3E88E32927E1340A004677DA /* AddClockViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3E88E32827E1340A004677DA /* AddClockViewController.swift */; };
 		3E88E32B27E1376B004677DA /* WorldClocks.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3E88E32A27E1376B004677DA /* WorldClocks.swift */; };
+		3EDF755227E24F1700E28689 /* WCTimeZone+Presets.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3EDF755127E24F1700E28689 /* WCTimeZone+Presets.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -28,6 +29,7 @@
 		3E88E32627E13300004677DA /* WCTimeZone.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WCTimeZone.swift; sourceTree = "<group>"; };
 		3E88E32827E1340A004677DA /* AddClockViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddClockViewController.swift; sourceTree = "<group>"; };
 		3E88E32A27E1376B004677DA /* WorldClocks.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WorldClocks.swift; sourceTree = "<group>"; };
+		3EDF755127E24F1700E28689 /* WCTimeZone+Presets.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "WCTimeZone+Presets.swift"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -67,6 +69,7 @@
 				3E88E31B27E1043F004677DA /* WorldClock.entitlements */,
 				3E88E32127E1051C004677DA /* Clock.swift */,
 				3E88E32627E13300004677DA /* WCTimeZone.swift */,
+				3EDF755127E24F1700E28689 /* WCTimeZone+Presets.swift */,
 				3E88E32827E1340A004677DA /* AddClockViewController.swift */,
 				3E88E32A27E1376B004677DA /* WorldClocks.swift */,
 			);
@@ -149,6 +152,7 @@
 			files = (
 				3E88E32727E13300004677DA /* WCTimeZone.swift in Sources */,
 				3E88E32B27E1376B004677DA /* WorldClocks.swift in Sources */,
+				3EDF755227E24F1700E28689 /* WCTimeZone+Presets.swift in Sources */,
 				3E88E32227E1051C004677DA /* Clock.swift in Sources */,
 				3E88E31527E1043E004677DA /* ClocksViewController.swift in Sources */,
 				3E88E32927E1340A004677DA /* AddClockViewController.swift in Sources */,

@@ -16,9 +16,9 @@ class AddClockViewController: NSViewController, NSMenuDelegate {
     
     private let worldClocks: WorldClocks = .shared
     
-    override func awakeFromNib() {
+    override func viewDidLoad() {
         
-        super.awakeFromNib()
+        super.viewDidLoad()
         
         zonesList.menu?.removeAllItems()
         
@@ -27,12 +27,7 @@ class AddClockViewController: NSViewController, NSMenuDelegate {
         }
         
         selectedZone = WCTimeZone.allTimeZones[0]
-        
-        let location = selectedZone.location
-        let split = location.split(separator: "/")
-        let name = split.count >= 2 ? String(split.last!) : location
-        
-        txtZoneName.stringValue = name
+        txtZoneName.stringValue = selectedZone.humanReadableLocation
     }
     
     @IBAction func zoneSelectionAction(_ sender: NSPopUpButton) {
@@ -42,12 +37,7 @@ class AddClockViewController: NSViewController, NSMenuDelegate {
         
         let zone = WCTimeZone.allTimeZones[zoneIndex]
         self.selectedZone = zone
-        
-        let location = zone.location
-        let split = location.split(separator: "/")
-        let name = split.count >= 2 ? String(split.last!) : location
-        
-        txtZoneName.stringValue = name
+        txtZoneName.stringValue = selectedZone.humanReadableLocation
     }
     
     @IBAction func cancelAction(_ sender: Any) {

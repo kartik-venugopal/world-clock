@@ -717,7 +717,7 @@
                                     <rect key="frame" x="1" y="1" width="748" height="192"/>
                                     <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                                     <subviews>
-                                        <tableView verticalHuggingPriority="750" allowsExpansionToolTips="YES" columnAutoresizingStyle="lastColumnOnly" columnReordering="NO" columnResizing="NO" autosaveColumns="NO" rowHeight="24" rowSizeStyle="automatic" headerView="DQC-fl-VtU" viewBased="YES" id="UPD-wC-zb3">
+                                        <tableView verticalHuggingPriority="750" allowsExpansionToolTips="YES" columnAutoresizingStyle="lastColumnOnly" columnReordering="NO" columnResizing="NO" multipleSelection="NO" autosaveColumns="NO" rowHeight="24" rowSizeStyle="automatic" headerView="DQC-fl-VtU" viewBased="YES" id="UPD-wC-zb3">
                                             <rect key="frame" x="0.0" y="0.0" width="748" height="164"/>
                                             <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                                             <size key="intercellSpacing" width="17" height="0.0"/>
@@ -741,7 +741,7 @@
                                                             <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                                                             <subviews>
                                                                 <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" horizontalCompressionResistancePriority="250" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="5w0-p5-zNw">
-                                                                    <rect key="frame" x="0.0" y="4" width="213" height="16"/>
+                                                                    <rect key="frame" x="0.0" y="2" width="213" height="20"/>
                                                                     <autoresizingMask key="autoresizingMask" widthSizable="YES" flexibleMinY="YES" flexibleMaxY="YES"/>
                                                                     <textFieldCell key="cell" lineBreakMode="truncatingTail" sendsActionOnEndEditing="YES" title="Table View Cell" id="TAS-7w-0qz">
                                                                         <font key="font" usesAppearanceFont="YES"/>
@@ -769,11 +769,11 @@
                                                     <tableColumnResizingMask key="resizingMask" resizeWithTable="YES" userResizable="YES"/>
                                                     <prototypeCellViews>
                                                         <tableCellView id="XY1-ix-4gT">
-                                                            <rect key="frame" x="238" y="0.0" width="265" height="17"/>
+                                                            <rect key="frame" x="238" y="0.0" width="265" height="24"/>
                                                             <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                                                             <subviews>
                                                                 <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" horizontalCompressionResistancePriority="250" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="JQs-lo-N8p">
-                                                                    <rect key="frame" x="0.0" y="1" width="265" height="16"/>
+                                                                    <rect key="frame" x="0.0" y="2" width="265" height="20"/>
                                                                     <autoresizingMask key="autoresizingMask" widthSizable="YES" flexibleMinY="YES" flexibleMaxY="YES"/>
                                                                     <textFieldCell key="cell" lineBreakMode="truncatingTail" sendsActionOnEndEditing="YES" title="Table View Cell" id="OfF-g5-gd7">
                                                                         <font key="font" usesAppearanceFont="YES"/>
@@ -805,7 +805,7 @@
                                                             <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                                                             <subviews>
                                                                 <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" horizontalCompressionResistancePriority="250" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="Y8a-Wo-NUg">
-                                                                    <rect key="frame" x="0.0" y="4" width="128" height="16"/>
+                                                                    <rect key="frame" x="0.0" y="2" width="128" height="20"/>
                                                                     <autoresizingMask key="autoresizingMask" widthSizable="YES" flexibleMinY="YES" flexibleMaxY="YES"/>
                                                                     <textFieldCell key="cell" lineBreakMode="truncatingTail" sendsActionOnEndEditing="YES" title="Table View Cell" id="6av-SQ-qEl">
                                                                         <font key="font" usesAppearanceFont="YES"/>
@@ -833,11 +833,11 @@
                                                     <tableColumnResizingMask key="resizingMask" resizeWithTable="YES" userResizable="YES"/>
                                                     <prototypeCellViews>
                                                         <tableCellView id="zFd-kL-gr5">
-                                                            <rect key="frame" x="665" y="0.0" width="74" height="17"/>
+                                                            <rect key="frame" x="665" y="0.0" width="74" height="24"/>
                                                             <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                                                             <subviews>
                                                                 <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" horizontalCompressionResistancePriority="250" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="BDP-XL-QH3">
-                                                                    <rect key="frame" x="0.0" y="1" width="74" height="16"/>
+                                                                    <rect key="frame" x="0.0" y="2" width="74" height="20"/>
                                                                     <autoresizingMask key="autoresizingMask" widthSizable="YES" flexibleMinY="YES" flexibleMaxY="YES"/>
                                                                     <textFieldCell key="cell" lineBreakMode="truncatingTail" sendsActionOnEndEditing="YES" title="Table View Cell" id="YCc-98-Mea">
                                                                         <font key="font" usesAppearanceFont="YES"/>
@@ -893,6 +893,17 @@
                                 </buttonCell>
                                 <connections>
                                     <action selector="removeClocksAction:" target="XfG-lQ-9wD" id="Gkv-DV-WNZ"/>
+                                </connections>
+                            </button>
+                            <button verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="6Ug-i8-D8c">
+                                <rect key="frame" x="163" y="18" width="78" height="19"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
+                                <buttonCell key="cell" type="roundRect" title="Move up" bezelStyle="roundedRect" image="arrow.up" catalog="system" imagePosition="left" alignment="right" borderStyle="border" imageScaling="proportionallyDown" inset="2" id="op2-10-ua5">
+                                    <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
+                                    <font key="font" metaFont="cellTitle"/>
+                                </buttonCell>
+                                <connections>
+                                    <action selector="moveClockUpAction:" target="XfG-lQ-9wD" id="85f-9W-xYK"/>
                                 </connections>
                             </button>
                             <button verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="MP4-QH-EuU">
@@ -955,6 +966,17 @@ Gw
                                     <action selector="changeTimeFormatAction:" target="XfG-lQ-9wD" id="5x5-qw-q9g"/>
                                 </connections>
                             </popUpButton>
+                            <button verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="uas-yN-Tec">
+                                <rect key="frame" x="249" y="18" width="97" height="19"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
+                                <buttonCell key="cell" type="roundRect" title="Move down" bezelStyle="roundedRect" image="arrow.down" catalog="system" imagePosition="left" alignment="right" borderStyle="border" imageScaling="proportionallyDown" inset="2" id="3cj-4i-d2A">
+                                    <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
+                                    <font key="font" metaFont="cellTitle"/>
+                                </buttonCell>
+                                <connections>
+                                    <action selector="moveClockDownAction:" target="XfG-lQ-9wD" id="UwF-XY-FgV"/>
+                                </connections>
+                            </button>
                         </subviews>
                     </view>
                     <connections>
@@ -1080,6 +1102,8 @@ Gw
         </scene>
     </scenes>
     <resources>
+        <image name="arrow.down" catalog="system" width="13" height="14"/>
+        <image name="arrow.up" catalog="system" width="13" height="14"/>
         <image name="minus" catalog="system" width="14" height="4"/>
         <image name="plus" catalog="system" width="14" height="13"/>
     </resources>

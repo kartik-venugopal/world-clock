@@ -54,6 +54,14 @@ class WorldClocks {
         }
     }
     
+    func moveClockUp(at index: Int) {
+        clocks.swapAt(index, index - 1)
+    }
+    
+    func moveClockDown(at index: Int) {
+        clocks.swapAt(index, index + 1)
+    }
+    
     func save() {
         
         if let data = try? encoder.encode(clocks) {

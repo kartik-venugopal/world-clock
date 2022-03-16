@@ -11,8 +11,6 @@ class ClocksViewController: NSViewController {
     
     private let worldClocks: WorldClocks = .shared
     
-    private lazy var statusItem: NSStatusItem = NSStatusBar.system.statusItem(withLength: NSStatusItem.variableLength)
-    
     @IBOutlet weak var tableView: NSTableView!
     @IBOutlet weak var timeFormatMenu: NSPopUpButton!
 
@@ -25,7 +23,9 @@ class ClocksViewController: NSViewController {
     }
     
     @objc func clockAdded() {
+        
         tableView.noteNumberOfRowsChanged()
+        NotificationCenter.default.post(name: Notification.Name("updateClocks"), object: self)
     }
     
     deinit {
@@ -38,6 +38,7 @@ class ClocksViewController: NSViewController {
               let timeFormat = TimeFormat(rawValue: selectedItem.tag) else {return}
         
         worldClocks.format = timeFormat
+        NotificationCenter.default.post(name: Notification.Name("updateClocks"), object: self)
     }
     
     @IBAction func removeClocksAction(_ sender: Any) {
@@ -46,22 +47,33 @@ class ClocksViewController: NSViewController {
         worldClocks.removeClocks(atIndices: selRows)
         
         tableView.reloadData()
+        NotificationCenter.default.post(name: Notification.Name("updateClocks"), object: self)
+    }
+    
+    @IBAction func moveClockUpAction(_ sender: Any) {
+        
+        let selRow = tableView.selectedRow
+        guard selRow >= 1 else {return}
+
+        worldClocks.moveClockUp(at: selRow)
+        tableView.reloadData()
+        NotificationCenter.default.post(name: Notification.Name("updateClocks"), object: self)
+    }
+    
+    @IBAction func moveClockDownAction(_ sender: Any) {
+        
+        let selRow = tableView.selectedRow
+        guard selRow >= 0, selRow < worldClocks.numberOfClocks - 1 else {return}
+
+        worldClocks.moveClockDown(at: selRow)
+        tableView.reloadData()
+        NotificationCenter.default.post(name: Notification.Name("updateClocks"), object: self)
     }
     
     @IBAction func doneAction(_ sender: Any) {
         
         view.window?.windowController?.close()
         NSApp.setActivationPolicy(.accessory)
-    }
-    
-    private func updateTime() {
-        
-        let now = Date()
-        
-        let times = self.worldClocks.clocks.map {$0.time(for: now)}
-        let timeStr = times.joined(separator: "  |  ")
-        
-        self.statusItem.button?.title = timeStr
     }
 }
 
