@@ -874,7 +874,7 @@
                                 </tableHeaderView>
                             </scrollView>
                             <button verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="ol9-bo-C6L">
-                                <rect key="frame" x="14" y="18" width="56" height="19"/>
+                                <rect key="frame" x="14" y="138" width="56" height="19"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
                                 <buttonCell key="cell" type="roundRect" title="Add" bezelStyle="roundedRect" image="plus" catalog="system" imagePosition="left" alignment="right" borderStyle="border" imageScaling="proportionallyDown" inset="2" id="Bxt-vW-TxS">
                                     <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
@@ -885,7 +885,7 @@
                                 </connections>
                             </button>
                             <button verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="o3c-tC-SaI">
-                                <rect key="frame" x="77" y="18" width="78" height="19"/>
+                                <rect key="frame" x="77" y="138" width="78" height="19"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
                                 <buttonCell key="cell" type="roundRect" title="Remove" bezelStyle="roundedRect" image="minus" catalog="system" imagePosition="left" alignment="right" borderStyle="border" imageScaling="proportionallyDown" inset="2" id="BD8-Uu-lkn">
                                     <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
@@ -896,7 +896,7 @@
                                 </connections>
                             </button>
                             <button verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="6Ug-i8-D8c">
-                                <rect key="frame" x="163" y="18" width="78" height="19"/>
+                                <rect key="frame" x="163" y="138" width="78" height="19"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
                                 <buttonCell key="cell" type="roundRect" title="Move up" bezelStyle="roundedRect" image="arrow.up" catalog="system" imagePosition="left" alignment="right" borderStyle="border" imageScaling="proportionallyDown" inset="2" id="op2-10-ua5">
                                     <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
@@ -930,7 +930,7 @@ Gw
                                 </textFieldCell>
                             </textField>
                             <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="Yi3-iG-0nw">
-                                <rect key="frame" x="12" y="116" width="149" height="27"/>
+                                <rect key="frame" x="12" y="91" width="149" height="27"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
                                 <textFieldCell key="cell" lineBreakMode="clipping" title="Options" id="Ybp-BY-thV">
                                     <font key="font" metaFont="systemBold" size="18"/>
@@ -939,7 +939,7 @@ Gw
                                 </textFieldCell>
                             </textField>
                             <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="Zkm-Su-eal">
-                                <rect key="frame" x="20" y="79" width="179" height="29"/>
+                                <rect key="frame" x="20" y="54" width="179" height="29"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
                                 <textFieldCell key="cell" lineBreakMode="clipping" title="Time format" id="3ho-8Q-9Am">
                                     <font key="font" metaFont="system"/>
@@ -948,7 +948,7 @@ Gw
                                 </textFieldCell>
                             </textField>
                             <popUpButton verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="NLN-T1-GXJ" userLabel="Time Format Menu">
-                                <rect key="frame" x="202" y="85" width="560" height="25"/>
+                                <rect key="frame" x="202" y="60" width="560" height="25"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
                                 <popUpButtonCell key="cell" type="push" title="hh:mm AM/PM" bezelStyle="rounded" alignment="left" lineBreakMode="truncatingTail" state="on" borderStyle="borderAndBezel" imageScaling="proportionallyDown" inset="2" selectedItem="Tpu-bt-zco" id="B6L-ba-USc">
                                     <behavior key="behavior" lightByBackground="YES" lightByGray="YES"/>
@@ -967,7 +967,7 @@ Gw
                                 </connections>
                             </popUpButton>
                             <button verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="uas-yN-Tec">
-                                <rect key="frame" x="249" y="18" width="97" height="19"/>
+                                <rect key="frame" x="249" y="138" width="97" height="19"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
                                 <buttonCell key="cell" type="roundRect" title="Move down" bezelStyle="roundedRect" image="arrow.down" catalog="system" imagePosition="left" alignment="right" borderStyle="border" imageScaling="proportionallyDown" inset="2" id="3cj-4i-d2A">
                                     <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
