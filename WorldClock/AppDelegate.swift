@@ -19,8 +19,10 @@ class AppDelegate: NSObject, NSApplicationDelegate {
     func applicationDidFinishLaunching(_ aNotification: Notification) {
         
         showClocksInMenuBar()
-        showSettings()
-        NotificationCenter.default.addObserver(self, selector: #selector(self.showClocksInMenuBar), name: Notification.Name("showClocksInMenuBar"), object: nil)
+        
+        if worldClocks.numberOfClocks == 0 {
+            showSettings()
+        }
     }
     
     func applicationWillTerminate(_ aNotification: Notification) {
@@ -38,11 +40,11 @@ class AppDelegate: NSObject, NSApplicationDelegate {
         item2.target = self
         
         statusItem.menu?.addItem(item1)
+        statusItem.menu?.addItem(NSMenuItem.separator())
         statusItem.menu?.addItem(item2)
         
         NSApp.setActivationPolicy(.accessory)
         
-        // TODO: Does this create multiple timers over multiple function calls to showClocks() ???
         Timer.scheduledTimer(withTimeInterval: 1, repeats: true) {_ in
             self.updateTime()
         }
@@ -52,9 +54,15 @@ class AppDelegate: NSObject, NSApplicationDelegate {
     
     private func updateTime() {
         
+        guard worldClocks.numberOfClocks > 0 else {
+        
+            self.statusItem.button?.title = "(No clocks configured)"
+            return
+        }
+        
         let now = Date()
         
-        let times = self.worldClocks.clocks.map {$0.time(for: now)}
+        let times = worldClocks.clocks.map {$0.time(for: now)}
         let timeStr = times.joined(separator: "  |  ")
         
         self.statusItem.button?.title = timeStr

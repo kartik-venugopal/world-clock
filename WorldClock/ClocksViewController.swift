@@ -51,7 +51,7 @@ class ClocksViewController: NSViewController {
     @IBAction func doneAction(_ sender: Any) {
         
         view.window?.windowController?.close()
-        NotificationCenter.default.post(name: Notification.Name("showClocksInMenuBar"), object: self)
+        NSApp.setActivationPolicy(.accessory)
     }
     
     private func updateTime() {
