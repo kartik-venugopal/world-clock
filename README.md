@@ -15,10 +15,10 @@ World Clock offers a simple user interface for configuring multiple clocks with 
 
 Get the [latest release](https://github.com/kartik-venugopal/world-clock/releases/latest).
 
-### World Clock settings interface
+### Settings
 
 ![World Clock settings screenshot](/Screenshots/WorldClock-Settings.png?raw=true)
 
-### World Clock menu bar menu
+### Menu
 
 ![World Clock menu screenshot](/Screenshots/WorldClock-Menu.png?raw=true)
