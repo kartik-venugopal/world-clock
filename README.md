@@ -6,7 +6,7 @@ World Clock offers a simple user interface for configuring multiple clocks with 
 ## Features
 - Configurable time format - AM/PM or 24 hour, and hh:mm or hh:mm:ss.
 - Custom name for each clock, if you don't like the default name for the zone.
-- Re-order the clocks per your preferred order.
+- Re-order the clocks per your preference.
 
 ## Compatibility
 - macOS Sierra (10.12) or later, and both Intel and Apple Silicon Macs are supported.
