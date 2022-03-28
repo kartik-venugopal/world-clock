@@ -34,7 +34,9 @@ class Clock: Codable {
     
     func time(for date: Date) -> String {
         
+        formatter.timeZone = zone.timeZone
         formatter.dateFormat = Self.format.formatString
+        
         return "\(name): \(formatter.string(from: date))"
     }
 }

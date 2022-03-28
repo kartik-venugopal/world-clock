@@ -9,13 +9,16 @@ import Foundation
 
 struct WCTimeZone: Codable, CustomStringConvertible {
     
-    internal init(location: String, offsetHours: Int, offsetMins: Int, isDST: Bool) {
+    internal init(index: Int, location: String, offsetHours: Int, offsetMins: Int, isDST: Bool) {
         
+        self.index = index
         self.location = location
         self.offsetHours = offsetHours
         self.offsetMins = offsetMins
         self.isDST = isDST
     }
+    
+    var index: Int
     
     let location: String
     

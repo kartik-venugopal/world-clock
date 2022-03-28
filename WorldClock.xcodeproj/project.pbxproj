@@ -7,18 +7,20 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		3E0D063027F25F5D0026A36C /* ClockEditContext.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3E0D062F27F25F5D0026A36C /* ClockEditContext.swift */; };
 		3E88E31327E1043E004677DA /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3E88E31227E1043E004677DA /* AppDelegate.swift */; };
 		3E88E31527E1043E004677DA /* ClocksViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3E88E31427E1043E004677DA /* ClocksViewController.swift */; };
 		3E88E31727E1043F004677DA /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 3E88E31627E1043F004677DA /* Assets.xcassets */; };
 		3E88E31A27E1043F004677DA /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 3E88E31827E1043F004677DA /* Main.storyboard */; };
 		3E88E32227E1051C004677DA /* Clock.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3E88E32127E1051C004677DA /* Clock.swift */; };
 		3E88E32727E13300004677DA /* WCTimeZone.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3E88E32627E13300004677DA /* WCTimeZone.swift */; };
-		3E88E32927E1340A004677DA /* AddClockViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3E88E32827E1340A004677DA /* AddClockViewController.swift */; };
+		3E88E32927E1340A004677DA /* ClockEditorViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3E88E32827E1340A004677DA /* ClockEditorViewController.swift */; };
 		3E88E32B27E1376B004677DA /* WorldClocks.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3E88E32A27E1376B004677DA /* WorldClocks.swift */; };
 		3EDF755227E24F1700E28689 /* WCTimeZone+Presets.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3EDF755127E24F1700E28689 /* WCTimeZone+Presets.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		3E0D062F27F25F5D0026A36C /* ClockEditContext.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ClockEditContext.swift; sourceTree = "<group>"; };
 		3E88E30F27E1043E004677DA /* WorldClock.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = WorldClock.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		3E88E31227E1043E004677DA /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		3E88E31427E1043E004677DA /* ClocksViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ClocksViewController.swift; sourceTree = "<group>"; };
@@ -27,7 +29,7 @@
 		3E88E31B27E1043F004677DA /* WorldClock.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = WorldClock.entitlements; sourceTree = "<group>"; };
 		3E88E32127E1051C004677DA /* Clock.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Clock.swift; sourceTree = "<group>"; };
 		3E88E32627E13300004677DA /* WCTimeZone.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WCTimeZone.swift; sourceTree = "<group>"; };
-		3E88E32827E1340A004677DA /* AddClockViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddClockViewController.swift; sourceTree = "<group>"; };
+		3E88E32827E1340A004677DA /* ClockEditorViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ClockEditorViewController.swift; sourceTree = "<group>"; };
 		3E88E32A27E1376B004677DA /* WorldClocks.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WorldClocks.swift; sourceTree = "<group>"; };
 		3EDF755127E24F1700E28689 /* WCTimeZone+Presets.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "WCTimeZone+Presets.swift"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -43,6 +45,34 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		3E0D063127F262770026A36C /* ViewControllers */ = {
+			isa = PBXGroup;
+			children = (
+				3E88E31427E1043E004677DA /* ClocksViewController.swift */,
+				3E88E32827E1340A004677DA /* ClockEditorViewController.swift */,
+			);
+			path = ViewControllers;
+			sourceTree = "<group>";
+		};
+		3E0D063227F262A90026A36C /* Model */ = {
+			isa = PBXGroup;
+			children = (
+				3E88E32127E1051C004677DA /* Clock.swift */,
+				3E88E32627E13300004677DA /* WCTimeZone.swift */,
+				3EDF755127E24F1700E28689 /* WCTimeZone+Presets.swift */,
+				3E88E32A27E1376B004677DA /* WorldClocks.swift */,
+			);
+			path = Model;
+			sourceTree = "<group>";
+		};
+		3E0D063327F262C90026A36C /* Utils */ = {
+			isa = PBXGroup;
+			children = (
+				3E0D062F27F25F5D0026A36C /* ClockEditContext.swift */,
+			);
+			path = Utils;
+			sourceTree = "<group>";
+		};
 		3E88E30627E1043E004677DA = {
 			isa = PBXGroup;
 			children = (
@@ -62,16 +92,13 @@
 		3E88E31127E1043E004677DA /* WorldClock */ = {
 			isa = PBXGroup;
 			children = (
-				3E88E31227E1043E004677DA /* AppDelegate.swift */,
-				3E88E31427E1043E004677DA /* ClocksViewController.swift */,
-				3E88E31627E1043F004677DA /* Assets.xcassets */,
 				3E88E31827E1043F004677DA /* Main.storyboard */,
+				3E88E31227E1043E004677DA /* AppDelegate.swift */,
+				3E0D063227F262A90026A36C /* Model */,
+				3E0D063127F262770026A36C /* ViewControllers */,
+				3E0D063327F262C90026A36C /* Utils */,
+				3E88E31627E1043F004677DA /* Assets.xcassets */,
 				3E88E31B27E1043F004677DA /* WorldClock.entitlements */,
-				3E88E32127E1051C004677DA /* Clock.swift */,
-				3E88E32627E13300004677DA /* WCTimeZone.swift */,
-				3EDF755127E24F1700E28689 /* WCTimeZone+Presets.swift */,
-				3E88E32827E1340A004677DA /* AddClockViewController.swift */,
-				3E88E32A27E1376B004677DA /* WorldClocks.swift */,
 			);
 			path = WorldClock;
 			sourceTree = "<group>";
@@ -150,12 +177,13 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				3E0D063027F25F5D0026A36C /* ClockEditContext.swift in Sources */,
 				3E88E32727E13300004677DA /* WCTimeZone.swift in Sources */,
 				3E88E32B27E1376B004677DA /* WorldClocks.swift in Sources */,
 				3EDF755227E24F1700E28689 /* WCTimeZone+Presets.swift in Sources */,
 				3E88E32227E1051C004677DA /* Clock.swift in Sources */,
 				3E88E31527E1043E004677DA /* ClocksViewController.swift in Sources */,
-				3E88E32927E1340A004677DA /* AddClockViewController.swift in Sources */,
+				3E88E32927E1340A004677DA /* ClockEditorViewController.swift in Sources */,
 				3E88E31327E1043E004677DA /* AppDelegate.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -297,7 +325,7 @@
 				CODE_SIGN_ENTITLEMENTS = WorldClock/WorldClock.entitlements;
 				CODE_SIGN_STYLE = Automatic;
 				COMBINE_HIDPI_IMAGES = YES;
-				CURRENT_PROJECT_VERSION = 1.0.0;
+				CURRENT_PROJECT_VERSION = 1.1.0;
 				DEVELOPMENT_TEAM = C4YUF2G676;
 				ENABLE_HARDENED_RUNTIME = YES;
 				GENERATE_INFOPLIST_FILE = YES;
@@ -309,7 +337,7 @@
 					"@executable_path/../Frameworks",
 				);
 				MACOSX_DEPLOYMENT_TARGET = 10.12;
-				MARKETING_VERSION = 1.0.0;
+				MARKETING_VERSION = 1.1.0;
 				PRODUCT_BUNDLE_IDENTIFIER = com.kv.WorldClock;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_EMIT_LOC_STRINGS = YES;
@@ -325,7 +353,7 @@
 				CODE_SIGN_ENTITLEMENTS = WorldClock/WorldClock.entitlements;
 				CODE_SIGN_STYLE = Automatic;
 				COMBINE_HIDPI_IMAGES = YES;
-				CURRENT_PROJECT_VERSION = 1.0.0;
+				CURRENT_PROJECT_VERSION = 1.1.0;
 				DEVELOPMENT_TEAM = C4YUF2G676;
 				ENABLE_HARDENED_RUNTIME = YES;
 				GENERATE_INFOPLIST_FILE = YES;
@@ -337,7 +365,7 @@
 					"@executable_path/../Frameworks",
 				);
 				MACOSX_DEPLOYMENT_TARGET = 10.12;
-				MARKETING_VERSION = 1.0.0;
+				MARKETING_VERSION = 1.1.0;
 				PRODUCT_BUNDLE_IDENTIFIER = com.kv.WorldClock;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_EMIT_LOC_STRINGS = YES;

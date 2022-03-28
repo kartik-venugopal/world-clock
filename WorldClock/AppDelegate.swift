@@ -24,14 +24,22 @@ class AppDelegate: NSObject, NSApplicationDelegate {
             showSettings()
         }
         
-        NotificationCenter.default.addObserver(self, selector: #selector(self.updateClocks), name: Notification.Name("updateClocks"), object: nil)
+        NotificationCenter.default.addObserver(self, selector: #selector(self.clocksUpdated), name: Notification.Name("updateClocks"), object: nil)
     }
     
     func applicationWillTerminate(_ aNotification: Notification) {
         WorldClocks.shared.save()
     }
     
-    @objc func showClocksInMenuBar() {
+    private var appVersion: String? {Bundle.main.infoDictionary?["CFBundleShortVersionString"] as? String}
+    
+    private func showClocksInMenuBar() {
+        
+        if let appVersion = self.appVersion {
+            statusItem.toolTip = "World Clock v\(appVersion)"
+        } else {
+            statusItem.toolTip = "World Clock"
+        }
         
         statusItem.menu = NSMenu()
         
@@ -54,7 +62,13 @@ class AppDelegate: NSObject, NSApplicationDelegate {
         updateClocks()
     }
     
-    @objc private func updateClocks() {
+    @objc private func clocksUpdated() {
+        
+        updateClocks()
+        WorldClocks.shared.save()
+    }
+    
+    private func updateClocks() {
         
         guard worldClocks.numberOfClocks > 0 else {
         

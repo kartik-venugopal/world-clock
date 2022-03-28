@@ -13,18 +13,20 @@ class ClocksViewController: NSViewController {
     
     @IBOutlet weak var tableView: NSTableView!
     @IBOutlet weak var timeFormatMenu: NSPopUpButton!
+    
+    private let clockEditContext: ClockEditContext = .shared
 
     override func viewDidLoad() {
         
         super.viewDidLoad()
 
-        NotificationCenter.default.addObserver(self, selector: #selector(self.clockAdded), name: Notification.Name("clockAdded"), object: nil)
+        NotificationCenter.default.addObserver(self, selector: #selector(self.clockAddedOrUpdated), name: Notification.Name("clockAddedOrUpdated"), object: nil)
         timeFormatMenu.selectItem(withTag: worldClocks.format.rawValue)
     }
     
-    @objc func clockAdded() {
+    @objc func clockAddedOrUpdated() {
         
-        tableView.noteNumberOfRowsChanged()
+        tableView.reloadData()
         NotificationCenter.default.post(name: Notification.Name("updateClocks"), object: self)
     }
     
@@ -39,6 +41,15 @@ class ClocksViewController: NSViewController {
         
         worldClocks.format = timeFormat
         NotificationCenter.default.post(name: Notification.Name("updateClocks"), object: self)
+    }
+    
+    @IBAction func editClockAction(_ sender: Any) {
+        
+        let selRow = tableView.selectedRow
+        guard selRow >= 0 else {return}
+        
+        clockEditContext.clock = worldClocks.clocks[selRow]
+        performSegue(withIdentifier: "EditClockSegue", sender: self)
     }
     
     @IBAction func removeClocksAction(_ sender: Any) {
