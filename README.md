@@ -1,5 +1,5 @@
 # World Clock (macOS)
-World Clock offers a simple user interface for configuring multiple clocks with different time zones and adding them to your macOS menu bar.
+World Clock offers a simple way to add multiple clocks for different time zones to your macOS menu bar.
 
 ![World Clock screenshot](/Screenshots/WorldClock.png?raw=true)
 
