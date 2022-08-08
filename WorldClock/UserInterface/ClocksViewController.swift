@@ -20,18 +20,18 @@ class ClocksViewController: NSViewController {
         
         super.viewDidLoad()
 
-        NotificationCenter.default.addObserver(self, selector: #selector(self.clockAddedOrUpdated), name: Notification.Name("clockAddedOrUpdated"), object: nil)
+        notifCtr.addObserver(self, selector: #selector(self.clockAddedOrUpdated), name: Notification.Name("clockAddedOrUpdated"), object: nil)
         timeFormatMenu.selectItem(withTag: worldClocks.format.rawValue)
     }
     
     @objc func clockAddedOrUpdated() {
         
         tableView.reloadData()
-        NotificationCenter.default.post(name: Notification.Name("updateClocks"), object: self)
+        notifCtr.post(name: .updateClocks, object: self)
     }
     
     deinit {
-        NotificationCenter.default.removeObserver(self)
+        notifCtr.removeObserver(self)
     }
     
     @IBAction func changeTimeFormatAction(_ sender: NSPopUpButton) {
@@ -40,7 +40,7 @@ class ClocksViewController: NSViewController {
               let timeFormat = TimeFormat(rawValue: selectedItem.tag) else {return}
         
         worldClocks.format = timeFormat
-        NotificationCenter.default.post(name: Notification.Name("updateClocks"), object: self)
+        notifCtr.post(name: .updateClocks, object: self)
     }
     
     @IBAction func editClockAction(_ sender: Any) {
@@ -58,7 +58,7 @@ class ClocksViewController: NSViewController {
         worldClocks.removeClocks(atIndices: selRows)
         
         tableView.reloadData()
-        NotificationCenter.default.post(name: Notification.Name("updateClocks"), object: self)
+        notifCtr.post(name: .updateClocks, object: self)
     }
     
     @IBAction func moveClockUpAction(_ sender: Any) {
@@ -68,7 +68,7 @@ class ClocksViewController: NSViewController {
 
         worldClocks.moveClockUp(at: selRow)
         tableView.reloadData()
-        NotificationCenter.default.post(name: Notification.Name("updateClocks"), object: self)
+        notifCtr.post(name: .updateClocks, object: self)
     }
     
     @IBAction func moveClockDownAction(_ sender: Any) {
@@ -78,7 +78,7 @@ class ClocksViewController: NSViewController {
 
         worldClocks.moveClockDown(at: selRow)
         tableView.reloadData()
-        NotificationCenter.default.post(name: Notification.Name("updateClocks"), object: self)
+        notifCtr.post(name: .updateClocks, object: self)
     }
     
     @IBAction func doneAction(_ sender: Any) {
@@ -100,25 +100,31 @@ extension ClocksViewController: NSTableViewDataSource, NSTableViewDelegate {
         
         guard let cell = tableView.makeView(withIdentifier: colID, owner: nil) as? NSTableCellView else {return nil}
         
+        guard row >= 0, row < worldClocks.numberOfClocks else {return nil}
+        
         let clock = worldClocks.clocks[row]
         
-        switch colID.rawValue {
+        switch colID {
             
-        case "clock_name":
+        case .clockName:
             
-            cell.textField?.stringValue = clock.name
+            cell.text = clock.name
             
-        case "clock_location":
+        case .clockLocation:
             
-            cell.textField?.stringValue = clock.zone.location
+            cell.text = clock.zone.location
             
-        case "clock_offset":
+        case .clockOffset:
             
-            cell.textField?.stringValue = clock.zone.humanReadableOffset
+            cell.text = clock.zone.humanReadableOffset
             
-        case "clock_dst":
+        case .clockIsDST:
             
-            cell.textField?.stringValue = clock.zone.isDST ? "Yes" : "No"
+            cell.text = clock.zone.isDST ? "Yes" : "No"
+            
+        case .clockNextDSTTransition:
+            
+            cell.text = clock.zone.nextDSTTransitionString ?? "-"
             
         default:
             
@@ -126,5 +132,23 @@ extension ClocksViewController: NSTableViewDataSource, NSTableViewDelegate {
         }
         
         return cell
+    }
+}
+
+private extension NSUserInterfaceItemIdentifier {
+    
+    static let clockName: NSUserInterfaceItemIdentifier = NSUserInterfaceItemIdentifier("clock_name")
+    static let clockLocation: NSUserInterfaceItemIdentifier = NSUserInterfaceItemIdentifier("clock_location")
+    static let clockOffset: NSUserInterfaceItemIdentifier = NSUserInterfaceItemIdentifier("clock_offset")
+    static let clockIsDST: NSUserInterfaceItemIdentifier = NSUserInterfaceItemIdentifier("clock_isDST")
+    static let clockNextDSTTransition: NSUserInterfaceItemIdentifier = NSUserInterfaceItemIdentifier("clock_nextDSTTransition")
+}
+
+private extension NSTableCellView {
+    
+    var text: String? {
+        
+        get {textField?.stringValue}
+        set {textField?.stringValue = newValue ?? ""}
     }
 }

@@ -10,6 +10,7 @@ import AppKit
 class ClockEditorViewController: NSViewController, NSMenuDelegate {
     
     @IBOutlet weak var zonesList: NSPopUpButton!
+    @IBOutlet weak var zonesListMenu: NSMenu!
     @IBOutlet weak var txtZoneName: NSTextField!
     
     private var selectedZone: WCTimeZone!
@@ -24,16 +25,14 @@ class ClockEditorViewController: NSViewController, NSMenuDelegate {
         
         // TODO: Load the zones into the menu immediately upon app startup ? Faster ?
         
-        zonesList.menu?.removeAllItems()
+        zonesListMenu.removeAllItems()
         
         for zone in WCTimeZone.allTimeZones {
-            zonesList.menu?.addItem(withTitle: zone.description, action: nil, keyEquivalent: "")
+            zonesListMenu.addItem(withTitle: zone.description, action: nil, keyEquivalent: "")
         }
         
         if let editedClock = clockEditContext.clock {
             
-            print("\n\nEdDITING CLOCK: \(editedClock.zone.index) ...\n\n")
-        
             selectedZone = editedClock.zone
             zonesList.selectItem(at: editedClock.zone.index)
             txtZoneName.stringValue = editedClock.name
@@ -45,6 +44,9 @@ class ClockEditorViewController: NSViewController, NSMenuDelegate {
         }
     }
     
+    ///
+    /// Update the window title depending on add / edit mode.
+    ///
     override func viewWillAppear() {
         
         if let editedClock = clockEditContext.clock {
@@ -76,8 +78,14 @@ class ClockEditorViewController: NSViewController, NSMenuDelegate {
         if let editedClock = clockEditContext.clock {
             
             // Edit the clock
+            let zoneIndex = zonesList.indexOfSelectedItem
+            guard WCTimeZone.allTimeZones.indices.contains(zoneIndex) else {
+                
+                // TODO: Display an error alert ? "Something went wrong: Time Zone with index \(zoneIndex) not found."
+                return
+            }
             
-            editedClock.zone = WCTimeZone.allTimeZones[zonesList.indexOfSelectedItem]
+            editedClock.zone = WCTimeZone.allTimeZones[zoneIndex]
             editedClock.name = txtZoneName.stringValue
             
             clockEditContext.clear()
@@ -85,23 +93,17 @@ class ClockEditorViewController: NSViewController, NSMenuDelegate {
         } else {
             
             // Add a new clock
-            
-            let newClock = Clock(zone: selectedZone, name: txtZoneName.stringValue)
-            worldClocks.addNewClock(newClock)
+            worldClocks.addNewClock(Clock(zone: selectedZone, name: txtZoneName.stringValue))
         }
         
         let notification: Notification = Notification(name: Notification.Name("clockAddedOrUpdated"), object: self, userInfo: nil)
-        NotificationCenter.default.post(notification)
+        notifCtr.post(notification)
         
         closeWindow()
     }
 }
 
 extension NSViewController {
-    
-    func closeWindow() {
-        view.window?.windowController?.close()
-    }
     
     var windowTitle: String? {
         
@@ -112,5 +114,9 @@ extension NSViewController {
         set {
             view.window?.title = newValue ?? ""
         }
+    }
+    
+    func closeWindow() {
+        view.window?.windowController?.close()
     }
 }

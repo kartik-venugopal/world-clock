@@ -9,18 +9,18 @@ import Foundation
 
 class Clock: Codable {
     
-    var zone: WCTimeZone
     var name: String
+    var zone: WCTimeZone
     
-    private static var format: TimeFormat {
-        WorldClocks.shared.format
+    private static var formatString: String {
+        worldClocks.format.formatString
     }
     
     lazy var formatter: DateFormatter = {
        
         let formatter = DateFormatter()
         formatter.timeZone = zone.timeZone
-        formatter.dateFormat = Self.format.formatString
+        formatter.dateFormat = Self.formatString
         
         return formatter
     }()
@@ -34,7 +34,7 @@ class Clock: Codable {
     func time(for date: Date) -> String {
         
         formatter.timeZone = zone.timeZone
-        formatter.dateFormat = Self.format.formatString
+        formatter.dateFormat = Self.formatString
         
         return "\(name): \(formatter.string(from: date))"
     }

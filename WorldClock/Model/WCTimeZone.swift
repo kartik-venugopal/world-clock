@@ -11,30 +11,76 @@ struct WCTimeZone: Codable, CustomStringConvertible {
     
     let timeZone: TimeZone
     
-    let offsetHours: Int
-    let offsetMins: Int
-    let signedOffsetAsSeconds: Int
-    let isOffsetNegative: Bool
+    let index: Int
+    let location: String
+    
+    let offsetSeconds: Int
+    
+    private let offsetHours: Int
+    private let offsetMins: Int
+    private let isOffsetNegative: Bool
+    
+    let description: String
+    let humanReadableOffset: String
+    let humanReadableLocation: String
     
     let isDST: Bool
     
-    let index: Int
-//        didSet {
-//            print("Index for '\(location)' is now: \(index)")
-//        }
-//    }
+    var nextDSTTransition: Date? {
+        timeZone.nextDaylightSavingTimeTransition
+    }
     
-    let location: String
+    var nextDSTTransitionString: String? {
+        
+        if let transition = self.nextDSTTransition {
+            return Self.formattedDateString(forZone: self, date: transition)
+        }
+        
+        return nil
+    }
+    
+    init(index: Int, timeZone: TimeZone) {
+        
+        self.index = index
+        self.timeZone = timeZone
+        
+        let signedOffset = timeZone.secondsFromGMT()
+        self.offsetSeconds = signedOffset
+        
+        self.isOffsetNegative = signedOffset < 0
+        
+        var offsetSeconds = abs(signedOffset)
+        
+        self.offsetHours = offsetSeconds / 3600
+        offsetSeconds -= offsetHours * 3600
+        
+        self.offsetMins = offsetSeconds / 60
+        offsetSeconds -= offsetMins * 60
+        
+        self.isDST = timeZone.isDaylightSavingTime()
+        self.location = timeZone.identifier
+        
+        self.humanReadableOffset = "GMT\(isOffsetNegative ? "-" : "+")\(offsetHours):\(String(format: "%02d", offsetMins))"
+        self.description = "\(location) - \(humanReadableOffset)\(isDST ? " (DST)" : "")"
+        
+        let split = location.split(separator: "/")
+        self.humanReadableLocation = (split.count >= 2 ? String(split.last!) : location).replacingOccurrences(of: "_", with: " ")
+    }
+}
+
+// ----------------------------------------------------------------------------------
+
+// MARK: Static members
+
+extension WCTimeZone {
     
     static var allTimeZones: [WCTimeZone] = {
-        
-        var index: Int = 0
         
         let zones: [TimeZone] = TimeZone.knownTimeZoneIdentifiers.compactMap {TimeZone(identifier: $0)}
             .sorted(by: {z1, z2 in
                 
                 // Sort by:
-                // 1 - Signed offset (in seconds) from GMT
+                // 1 - Offset (in seconds) from GMT
                 // 2 - Location string, if offsets match
                 
                 let offset1 = z1.secondsFromGMT()
@@ -47,80 +93,56 @@ struct WCTimeZone: Codable, CustomStringConvertible {
                 }
             })
         
-        let wcZones: [WCTimeZone] = zones.enumerated().map {index, zone in
+        return zones.enumerated().map {index, zone in
             WCTimeZone(index: index, timeZone: zone)
         }
-        
-//        for (index, var zone) in zones.enumerated() {
-//            zone.index = index
-//            print("\nZone \(zone.index): '\(zone.location)'")
-//        }
-        
-        return wcZones
     }()
     
-    init(index: Int, timeZone: TimeZone) {
+    static let formatter: DateFormatter = {
         
-        self.index = index
-        self.timeZone = timeZone
-        
-        let signedOffset = timeZone.secondsFromGMT()
-        self.signedOffsetAsSeconds = signedOffset
-        self.isOffsetNegative = signedOffset < 0
-        
-        var offsetSeconds = abs(timeZone.secondsFromGMT())
-        
-        self.offsetHours = offsetSeconds / 3600
-        offsetSeconds -= offsetHours * 3600
-        
-        self.offsetMins = offsetSeconds / 60
-        offsetSeconds -= offsetMins * 60
-        
-        self.isDST = timeZone.isDaylightSavingTime()
-        self.location = timeZone.identifier
-    }
+        let formatter = DateFormatter()
+        formatter.dateFormat = "dd MMM, YYYY 'at' HH:mm"
+        return formatter
+    }()
     
-//    internal init(index: Int, location: String, offsetHours: Int, offsetMins: Int, isDST: Bool) {
-//
-//        self.index = index
-//        self.location = location
-//
-//        self.offsetHours = offsetHours
-//        self.offsetMins = offsetMins
-//
-//        let isNegative = offsetHours < 0
-//        let offset = abs(offsetHours) * 3600 + offsetMins * 60
-//        offsetAsSeconds = offset * (isNegative ? -1 : 1)
-//
-//        self.timeZone = TimeZone.init(secondsFromGMT: offsetAsSeconds)!
-//        self.isDST = isDST
-//    }
-    
-    var humanReadableLocation: String {
+    static func formattedDateString(forZone zone: WCTimeZone, date: Date) -> String {
         
-        let split = location.split(separator: "/")
-        return (split.count >= 2 ? String(split.last!) : location).replacingOccurrences(of: "_", with: " ")
-    }
-    
-    var nextDSTTransition: Date? {
-        timeZone.nextDaylightSavingTimeTransition
-    }
-    
-    var description: String {
-        "\(location) - \(humanReadableOffset)\(isDST ? " (DST)" : "")"
-    }
-    
-    var humanReadableOffset: String {
-        "GMT\(isOffsetNegative ? "-" : "+")\(offsetHours):\(String(format: "%02d", offsetMins))"
+        formatter.timeZone = zone.timeZone
+        
+//        print("\nDST Offset at date: \(date) is: \(zone.timeZone.daylightSavingTimeOffset(for: date.addingHours(5)))")
+        
+        // TODO: This will not work when beginning DST !!!
+        let willClocksMoveBack: Bool = zone.timeZone.willClocksMoveBackAtDSTTransition(date)
+        print("\nwillClocksMoveBack: \(willClocksMoveBack)")
+        if willClocksMoveBack {
+            return formatter.string(from: date.addingHours(1))
+        } else {
+            return formatter.string(from: date.addingHours(-1))
+        }
     }
 }
 
-extension SignedInteger {
+extension Date {
     
-    mutating func getAndIncrement() -> Self {
+    func addingHours(_ numHours: Int) -> Date {
+        Calendar.current.date(byAdding: .hour, value: numHours, to: self)!
+    }
+    
+    func addingSeconds(_ numSecs: Int) -> Date {
+        Calendar.current.date(byAdding: .second, value: numSecs, to: self)!
+    }
+}
+
+extension TimeZone {
+    
+    func willClocksMoveBackAtDSTTransition(_ date: Date) -> Bool {
         
-        let selfBeforeIncrement: Self = self
-        self += 1
-        return selfBeforeIncrement
+        let hoursBeforeDate: Date = date.addingHours(-5)
+        let hoursAfterDate: Date = date.addingHours(5)
+        
+        let offsetBeforeDate: TimeInterval = daylightSavingTimeOffset(for: hoursBeforeDate)
+        let offsetAfterDate: TimeInterval = daylightSavingTimeOffset(for: hoursAfterDate)
+        
+        return offsetAfterDate < offsetBeforeDate
     }
 }
