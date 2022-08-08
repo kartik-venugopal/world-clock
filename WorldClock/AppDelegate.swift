@@ -18,6 +18,8 @@ class AppDelegate: NSObject, NSApplicationDelegate {
 
     func applicationDidFinishLaunching(_ aNotification: Notification) {
         
+//        UserDefaults.standard.removeObject(forKey: "worldClock.savedClocks")
+        
         showClocksInMenuBar()
         
         if worldClocks.numberOfClocks == 0 {
@@ -25,6 +27,8 @@ class AppDelegate: NSObject, NSApplicationDelegate {
         }
         
         NotificationCenter.default.addObserver(self, selector: #selector(self.clocksUpdated), name: Notification.Name("updateClocks"), object: nil)
+        
+//        UserDefaults.standard.removeObject(forKey: "worldClock.savedClocks")
     }
     
     func applicationWillTerminate(_ aNotification: Notification) {
@@ -82,6 +86,8 @@ class AppDelegate: NSObject, NSApplicationDelegate {
         let timeStr = times.joined(separator: "  |  ")
         
         self.statusItem.button?.title = timeStr
+        let clock = worldClocks.clocks.last!
+//        print("Next DST for '\(clock.zone.location)' is: \(clock.zone.nextDSTTransition)")
     }
     
     @objc func showSettings() {
@@ -105,4 +111,3 @@ class AppDelegate: NSObject, NSApplicationDelegate {
         NSApp.terminate(self)
     }
 }
-

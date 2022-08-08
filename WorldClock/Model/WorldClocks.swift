@@ -14,6 +14,7 @@ class WorldClocks {
     private(set) var clocks: [Clock] = []
     
     var format: TimeFormat = .hoursMinutes_AM_PM
+    var indicateDST: Bool = true
     
     var numberOfClocks: Int {
         clocks.count
@@ -27,13 +28,19 @@ class WorldClocks {
     private static let defaultsKey_savedClocks: String = "worldClock.savedClocks"
     private static let defaultsKey_timeFormat: String = "worldClock.timeFormat"
     
+    // ---------------------------------------------------------------------------------------------------------
+    
+    // MARK: init/de-init (UserDefaults persistence)
+    
     private init() {
         
         if let savedClocksData = defaults.object(forKey: Self.defaultsKey_savedClocks) as? Data,
            let savedClocks = try? decoder.decode([Clock].self, from: savedClocksData) {
             
             self.clocks = savedClocks
-            
+            for clock in self.clocks {
+                print("TZIndex: \(clock.zone.index)")
+            }
         }
         
         if let savedFormatData = defaults.object(forKey: Self.defaultsKey_timeFormat) as? Data,
@@ -42,6 +49,31 @@ class WorldClocks {
             self.format = savedFormat
         }
     }
+    
+    func save() {
+        
+        print("\nSaving clocks ...")
+        
+        for clock in self.clocks {
+            print("TZIndex: \(clock.zone.index)")
+        }
+        
+        if let clocksData = try? encoder.encode(clocks) {
+            defaults.set(clocksData, forKey: Self.defaultsKey_savedClocks)
+        }
+        
+        if let formatData = try? encoder.encode(format) {
+            defaults.set(formatData, forKey: Self.defaultsKey_timeFormat)
+        }
+    }
+    
+    deinit {
+        save()
+    }
+    
+    // ---------------------------------------------------------------------------------------------------------
+    
+    // MARK: CRUD functions
     
     func addNewClock(_ newClock: Clock) {
         clocks.append(newClock)
@@ -60,20 +92,5 @@ class WorldClocks {
     
     func moveClockDown(at index: Int) {
         clocks.swapAt(index, index + 1)
-    }
-    
-    func save() {
-        
-        if let data = try? encoder.encode(clocks) {
-            defaults.set(data, forKey: Self.defaultsKey_savedClocks)
-        }
-        
-        if let data = try? encoder.encode(format) {
-            defaults.set(data, forKey: Self.defaultsKey_timeFormat)
-        }
-    }
-    
-    deinit {
-        save()
     }
 }

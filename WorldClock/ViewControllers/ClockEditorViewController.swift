@@ -22,6 +22,8 @@ class ClockEditorViewController: NSViewController, NSMenuDelegate {
         
         super.viewDidLoad()
         
+        // TODO: Load the zones into the menu immediately upon app startup ? Faster ?
+        
         zonesList.menu?.removeAllItems()
         
         for zone in WCTimeZone.allTimeZones {
@@ -29,6 +31,8 @@ class ClockEditorViewController: NSViewController, NSMenuDelegate {
         }
         
         if let editedClock = clockEditContext.clock {
+            
+            print("\n\nEdDITING CLOCK: \(editedClock.zone.index) ...\n\n")
         
             selectedZone = editedClock.zone
             zonesList.selectItem(at: editedClock.zone.index)
@@ -38,6 +42,16 @@ class ClockEditorViewController: NSViewController, NSMenuDelegate {
             
             selectedZone = WCTimeZone.allTimeZones[0]
             txtZoneName.stringValue = selectedZone.humanReadableLocation
+        }
+    }
+    
+    override func viewWillAppear() {
+        
+        if let editedClock = clockEditContext.clock {
+            windowTitle = "Edit Clock '\(editedClock.name)'"
+            
+        } else {
+            windowTitle = "Add a Clock"
         }
     }
     
@@ -54,7 +68,7 @@ class ClockEditorViewController: NSViewController, NSMenuDelegate {
     @IBAction func cancelAction(_ sender: Any) {
         
         clockEditContext.clear()
-        view.window?.windowController?.close()
+        closeWindow()
     }
     
     @IBAction func saveAction(_ sender: Any) {
@@ -79,6 +93,24 @@ class ClockEditorViewController: NSViewController, NSMenuDelegate {
         let notification: Notification = Notification(name: Notification.Name("clockAddedOrUpdated"), object: self, userInfo: nil)
         NotificationCenter.default.post(notification)
         
+        closeWindow()
+    }
+}
+
+extension NSViewController {
+    
+    func closeWindow() {
         view.window?.windowController?.close()
+    }
+    
+    var windowTitle: String? {
+        
+        get {
+            view.window?.title
+        }
+        
+        set {
+            view.window?.title = newValue ?? ""
+        }
     }
 }

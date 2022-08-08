@@ -8,6 +8,7 @@
 
 /* Begin PBXBuildFile section */
 		3E0D063027F25F5D0026A36C /* ClockEditContext.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3E0D062F27F25F5D0026A36C /* ClockEditContext.swift */; };
+		3E684B0228A06AD900B2AEAE /* TimeFormat.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3E684B0128A06AD900B2AEAE /* TimeFormat.swift */; };
 		3E88E31327E1043E004677DA /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3E88E31227E1043E004677DA /* AppDelegate.swift */; };
 		3E88E31527E1043E004677DA /* ClocksViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3E88E31427E1043E004677DA /* ClocksViewController.swift */; };
 		3E88E31727E1043F004677DA /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 3E88E31627E1043F004677DA /* Assets.xcassets */; };
@@ -21,6 +22,7 @@
 
 /* Begin PBXFileReference section */
 		3E0D062F27F25F5D0026A36C /* ClockEditContext.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ClockEditContext.swift; sourceTree = "<group>"; };
+		3E684B0128A06AD900B2AEAE /* TimeFormat.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TimeFormat.swift; sourceTree = "<group>"; };
 		3E88E30F27E1043E004677DA /* WorldClock.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = WorldClock.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		3E88E31227E1043E004677DA /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		3E88E31427E1043E004677DA /* ClocksViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ClocksViewController.swift; sourceTree = "<group>"; };
@@ -58,6 +60,7 @@
 			isa = PBXGroup;
 			children = (
 				3E88E32127E1051C004677DA /* Clock.swift */,
+				3E684B0128A06AD900B2AEAE /* TimeFormat.swift */,
 				3E88E32627E13300004677DA /* WCTimeZone.swift */,
 				3EDF755127E24F1700E28689 /* WCTimeZone+Presets.swift */,
 				3E88E32A27E1376B004677DA /* WorldClocks.swift */,
@@ -183,6 +186,7 @@
 				3EDF755227E24F1700E28689 /* WCTimeZone+Presets.swift in Sources */,
 				3E88E32227E1051C004677DA /* Clock.swift in Sources */,
 				3E88E31527E1043E004677DA /* ClocksViewController.swift in Sources */,
+				3E684B0228A06AD900B2AEAE /* TimeFormat.swift in Sources */,
 				3E88E32927E1340A004677DA /* ClockEditorViewController.swift in Sources */,
 				3E88E31327E1043E004677DA /* AppDelegate.swift in Sources */,
 			);
