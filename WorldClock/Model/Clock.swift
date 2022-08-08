@@ -36,6 +36,7 @@ class Clock: Codable {
         formatter.timeZone = zone.timeZone
         formatter.dateFormat = Self.formatString
         
-        return "\(name): \(formatter.string(from: date))"
+        let showDST = worldClocks.indicateDST && zone.isDST(for: date)
+        return "\(name)\(showDST ? " (DST)" : ""): \(formatter.string(from: date))"
     }
 }

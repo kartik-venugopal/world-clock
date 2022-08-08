@@ -43,6 +43,12 @@ class ClocksViewController: NSViewController {
         notifCtr.post(name: .updateClocks, object: self)
     }
     
+    @IBAction func toggleIndicateDSTAction(_ sender: NSButton) {
+        
+        worldClocks.indicateDST = sender.state == .on
+        notifCtr.post(name: .updateClocks, object: self)
+    }
+    
     @IBAction func editClockAction(_ sender: Any) {
         
         let selRow = tableView.selectedRow
@@ -120,7 +126,7 @@ extension ClocksViewController: NSTableViewDataSource, NSTableViewDelegate {
             
         case .clockIsDST:
             
-            cell.text = clock.zone.isDST ? "Yes" : "No"
+            cell.text = clock.zone.isDST(for: Date()) ? "Yes" : "No"
             
         case .clockNextDSTTransition:
             
