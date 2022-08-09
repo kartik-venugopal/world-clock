@@ -9,6 +9,28 @@ import AppKit
 
 extension ClocksViewController: NSTableViewDataSource, NSTableViewDelegate {
     
+    // Enables type selection, allowing the user to conveniently and efficiently find a playlist track by typing its display name, which results in the track, if found, being selected within the playlist
+    func tableView(_ tableView: NSTableView, typeSelectStringFor tableColumn: NSTableColumn?, row: Int) -> String? {
+        
+        guard worldClocks.clocks.indices.contains(row), let colID = tableColumn?.identifier else {return nil}
+        
+        // Only the track name column is used for type selection
+        switch colID {
+            
+        case .clockName:
+            
+            return worldClocks.clocks[row].name
+            
+        case .clockLocation:
+            
+            return worldClocks.clocks[row].zone.location
+            
+        default:
+            
+            return nil
+        }
+    }
+    
     func numberOfRows(in tableView: NSTableView) -> Int {
         worldClocks.numberOfClocks
     }
@@ -18,8 +40,6 @@ extension ClocksViewController: NSTableViewDataSource, NSTableViewDelegate {
         guard worldClocks.clocks.indices.contains(row), let colID = tableColumn?.identifier else {return nil}
         
         guard let cell = tableView.makeView(withIdentifier: colID, owner: nil) as? NSTableCellView else {return nil}
-        
-        guard row >= 0, row < worldClocks.numberOfClocks else {return nil}
         
         let clock = worldClocks.clocks[row]
         
@@ -31,7 +51,7 @@ extension ClocksViewController: NSTableViewDataSource, NSTableViewDelegate {
             
         case .clockLocation:
             
-            cell.text = clock.zone.location
+            cell.text = clock.zone.humanReadableLocation
             
         case .clockOffset:
             
