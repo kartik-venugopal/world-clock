@@ -717,7 +717,7 @@
                                     <rect key="frame" x="1" y="1" width="648" height="192"/>
                                     <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                                     <subviews>
-                                        <tableView verticalHuggingPriority="750" allowsExpansionToolTips="YES" columnAutoresizingStyle="lastColumnOnly" columnReordering="NO" multipleSelection="NO" autosaveColumns="NO" rowHeight="24" rowSizeStyle="automatic" headerView="DQC-fl-VtU" viewBased="YES" id="UPD-wC-zb3">
+                                        <tableView verticalHuggingPriority="750" allowsExpansionToolTips="YES" columnAutoresizingStyle="lastColumnOnly" columnReordering="NO" autosaveColumns="NO" rowHeight="24" rowSizeStyle="automatic" headerView="DQC-fl-VtU" viewBased="YES" id="UPD-wC-zb3">
                                             <rect key="frame" x="0.0" y="0.0" width="648" height="164"/>
                                             <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                                             <size key="intercellSpacing" width="17" height="0.0"/>
@@ -893,7 +893,7 @@
                                     </subviews>
                                 </clipView>
                                 <scroller key="horizontalScroller" hidden="YES" wantsLayer="YES" verticalHuggingPriority="750" horizontal="YES" id="dqt-O7-jg9">
-                                    <rect key="frame" x="1" y="178" width="748" height="15"/>
+                                    <rect key="frame" x="1" y="178" width="648" height="15"/>
                                     <autoresizingMask key="autoresizingMask"/>
                                 </scroller>
                                 <scroller key="verticalScroller" hidden="YES" wantsLayer="YES" verticalHuggingPriority="750" doubleValue="1" horizontal="NO" id="bOH-kR-ca4">
@@ -919,7 +919,7 @@
                             <button verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="o3c-tC-SaI">
                                 <rect key="frame" x="81" y="191" width="78" height="19"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
-                                <buttonCell key="cell" type="roundRect" title="Remove" bezelStyle="roundedRect" image="minus" catalog="system" imagePosition="left" alignment="right" borderStyle="border" imageScaling="proportionallyDown" inset="2" id="BD8-Uu-lkn">
+                                <buttonCell key="cell" type="roundRect" title="Remove" bezelStyle="roundedRect" image="minus" catalog="system" imagePosition="left" alignment="right" enabled="NO" borderStyle="border" imageScaling="proportionallyDown" inset="2" id="BD8-Uu-lkn">
                                     <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
                                     <font key="font" metaFont="cellTitle"/>
                                 </buttonCell>
@@ -930,7 +930,7 @@
                             <button verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="6Ug-i8-D8c">
                                 <rect key="frame" x="228" y="191" width="78" height="19"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
-                                <buttonCell key="cell" type="roundRect" title="Move up" bezelStyle="roundedRect" image="arrow.up" catalog="system" imagePosition="left" alignment="right" borderStyle="border" imageScaling="proportionallyDown" inset="2" id="op2-10-ua5">
+                                <buttonCell key="cell" type="roundRect" title="Move up" bezelStyle="roundedRect" image="arrow.up" catalog="system" imagePosition="left" alignment="right" enabled="NO" borderStyle="border" imageScaling="proportionallyDown" inset="2" id="op2-10-ua5">
                                     <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
                                     <font key="font" metaFont="cellTitle"/>
                                 </buttonCell>
@@ -1001,7 +1001,7 @@ Gw
                             <button verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="uas-yN-Tec">
                                 <rect key="frame" x="313" y="191" width="97" height="19"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
-                                <buttonCell key="cell" type="roundRect" title="Move down" bezelStyle="roundedRect" image="arrow.down" catalog="system" imagePosition="left" alignment="right" borderStyle="border" imageScaling="proportionallyDown" inset="2" id="3cj-4i-d2A">
+                                <buttonCell key="cell" type="roundRect" title="Move down" bezelStyle="roundedRect" image="arrow.down" catalog="system" imagePosition="left" alignment="right" enabled="NO" borderStyle="border" imageScaling="proportionallyDown" inset="2" id="3cj-4i-d2A">
                                     <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
                                     <font key="font" metaFont="cellTitle"/>
                                 </buttonCell>
@@ -1012,7 +1012,7 @@ Gw
                             <button verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="Jlk-bR-sIr">
                                 <rect key="frame" x="166" y="191" width="55" height="19"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
-                                <buttonCell key="cell" type="roundRect" title="Edit" bezelStyle="roundedRect" image="pencil" catalog="system" imagePosition="left" alignment="right" borderStyle="border" imageScaling="proportionallyDown" inset="2" id="Kpt-Rn-uPL">
+                                <buttonCell key="cell" type="roundRect" title="Edit" bezelStyle="roundedRect" image="pencil" catalog="system" imagePosition="left" alignment="right" enabled="NO" borderStyle="border" imageScaling="proportionallyDown" inset="2" id="Kpt-Rn-uPL">
                                     <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
                                     <font key="font" metaFont="cellTitle"/>
                                 </buttonCell>
@@ -1034,6 +1034,11 @@ Gw
                         </subviews>
                     </view>
                     <connections>
+                        <outlet property="btnAddClock" destination="ol9-bo-C6L" id="Joc-eI-3Fg"/>
+                        <outlet property="btnEditClock" destination="Jlk-bR-sIr" id="3aM-d6-D7F"/>
+                        <outlet property="btnMoveClockDown" destination="uas-yN-Tec" id="0Vj-PV-a2K"/>
+                        <outlet property="btnMoveClockUp" destination="6Ug-i8-D8c" id="ncL-ii-rvY"/>
+                        <outlet property="btnRemoveClocks" destination="o3c-tC-SaI" id="sZi-9u-DE0"/>
                         <outlet property="tableView" destination="UPD-wC-zb3" id="flG-3W-gL4"/>
                         <outlet property="timeFormatMenu" destination="NLN-T1-GXJ" id="F0r-dr-4DU"/>
                     </connections>

@@ -14,15 +14,39 @@ class ClocksViewController: NSViewController {
     @IBOutlet weak var tableView: NSTableView!
     @IBOutlet weak var timeFormatMenu: NSPopUpButton!
     
+    @IBOutlet weak var btnAddClock: NSButton!
+    @IBOutlet weak var btnRemoveClocks: NSButton!
+    @IBOutlet weak var btnEditClock: NSButton!
+    @IBOutlet weak var btnMoveClockUp: NSButton!
+    @IBOutlet weak var btnMoveClockDown: NSButton!
+    
     private let clockEditContext: ClockEditContext = .shared
+    
+//    private lazy var dstInfoUpdateTimer: RepeatingTaskExecutor = RepeatingTaskExecutor(intervalMillis: 1000, task: updateDSTInfo, queue: .main)
 
     override func viewDidLoad() {
         
         super.viewDidLoad()
 
-        notifCtr.addObserver(self, selector: #selector(self.clockAddedOrUpdated), name: Notification.Name("clockAddedOrUpdated"), object: nil)
+        notifCtr.addObserver(self, selector: #selector(self.clockAddedOrUpdated), name: .clockAddedOrUpdated, object: nil)
         timeFormatMenu.selectItem(withTag: worldClocks.format.rawValue)
     }
+    
+    override func viewWillAppear() {
+
+        super.viewWillAppear()
+        updateButtonStates()
+    }
+//
+//    override func viewDidDisappear() {
+//
+//        super.viewDidDisappear()
+//        print("Clocks - VDD")
+//    }
+//
+//    private func updateDSTInfo() {
+//        print("\nUpdating DST info ...")
+//    }
     
     @objc func clockAddedOrUpdated() {
         
@@ -30,9 +54,36 @@ class ClocksViewController: NSViewController {
         notifCtr.post(name: .updateClocks, object: self)
     }
     
+    func updateButtonStates() {
+        
+        switch tableView.numberOfSelectedRows {
+            
+        case 0:
+            
+            [btnRemoveClocks, btnEditClock, btnMoveClockUp, btnMoveClockDown].forEach {$0?.disable()}
+            
+        case 1:
+            
+            let selRow = tableView.selectedRow
+            btnMoveClockUp.enableIf(selRow > 0)
+            btnMoveClockDown.enableIf(selRow < (tableView.numberOfRows - 1))
+            
+            [btnRemoveClocks, btnEditClock].forEach {$0?.enable()}
+            
+        default:
+            
+            btnRemoveClocks.enable()
+            [btnEditClock, btnMoveClockUp, btnMoveClockDown].forEach {$0?.disable()}
+        }
+    }
+    
     deinit {
         notifCtr.removeObserver(self)
     }
+    
+    // ----------------------------------------------------------------------------------------------------------------
+    
+    // MARK: Actions
     
     @IBAction func changeTimeFormatAction(_ sender: NSPopUpButton) {
         
@@ -62,8 +113,9 @@ class ClocksViewController: NSViewController {
         
         let selRows = tableView.selectedRowIndexes.sorted(by: >)
         worldClocks.removeClocks(atIndices: selRows)
-        
         tableView.reloadData()
+        updateButtonStates()
+        
         notifCtr.post(name: .updateClocks, object: self)
     }
     
@@ -73,7 +125,8 @@ class ClocksViewController: NSViewController {
         guard selRow >= 1 else {return}
 
         worldClocks.moveClockUp(at: selRow)
-        tableView.reloadData()
+        tableView.reloadData(andSelectRow: selRow - 1)
+        
         notifCtr.post(name: .updateClocks, object: self)
     }
     
@@ -83,7 +136,8 @@ class ClocksViewController: NSViewController {
         guard selRow >= 0, selRow < worldClocks.numberOfClocks - 1 else {return}
 
         worldClocks.moveClockDown(at: selRow)
-        tableView.reloadData()
+        tableView.reloadData(andSelectRow: selRow + 1)
+        
         notifCtr.post(name: .updateClocks, object: self)
     }
     
@@ -94,67 +148,36 @@ class ClocksViewController: NSViewController {
     }
 }
 
-extension ClocksViewController: NSTableViewDataSource, NSTableViewDelegate {
+extension NSControl {
     
-    func numberOfRows(in tableView: NSTableView) -> Int {
-        worldClocks.numberOfClocks
+    var isDisabled: Bool {!isEnabled}
+    
+    @objc func enable() {
+        self.isEnabled = true
     }
     
-    func tableView(_ tableView: NSTableView, viewFor tableColumn: NSTableColumn?, row: Int) -> NSView? {
-        
-        guard worldClocks.clocks.indices.contains(row), let colID = tableColumn?.identifier else {return nil}
-        
-        guard let cell = tableView.makeView(withIdentifier: colID, owner: nil) as? NSTableCellView else {return nil}
-        
-        guard row >= 0, row < worldClocks.numberOfClocks else {return nil}
-        
-        let clock = worldClocks.clocks[row]
-        
-        switch colID {
-            
-        case .clockName:
-            
-            cell.text = clock.name
-            
-        case .clockLocation:
-            
-            cell.text = clock.zone.location
-            
-        case .clockOffset:
-            
-            cell.text = clock.zone.humanReadableOffset
-            
-        case .clockIsDST:
-            
-            cell.text = clock.zone.isDST(for: Date()) ? "Yes" : "No"
-            
-        case .clockNextDSTTransition:
-            
-            cell.text = clock.zone.nextDSTTransitionString ?? "-"
-            
-        default:
-            
-            return nil
-        }
-        
-        return cell
+    @objc func disable() {
+        self.isEnabled = false
+    }
+    
+    @objc func enableIf(_ condition: Bool) {
+        self.isEnabled = condition
+    }
+    
+    @objc func disableIf(_ condition: Bool) {
+        self.isEnabled = !condition
     }
 }
 
-private extension NSUserInterfaceItemIdentifier {
+extension NSTableView {
     
-    static let clockName: NSUserInterfaceItemIdentifier = NSUserInterfaceItemIdentifier("clock_name")
-    static let clockLocation: NSUserInterfaceItemIdentifier = NSUserInterfaceItemIdentifier("clock_location")
-    static let clockOffset: NSUserInterfaceItemIdentifier = NSUserInterfaceItemIdentifier("clock_offset")
-    static let clockIsDST: NSUserInterfaceItemIdentifier = NSUserInterfaceItemIdentifier("clock_isDST")
-    static let clockNextDSTTransition: NSUserInterfaceItemIdentifier = NSUserInterfaceItemIdentifier("clock_nextDSTTransition")
-}
-
-private extension NSTableCellView {
+    func selectRow(_ row: Int) {
+        selectRowIndexes(IndexSet(integer: row), byExtendingSelection: false)
+    }
     
-    var text: String? {
+    func reloadData(andSelectRow row: Int) {
         
-        get {textField?.stringValue}
-        set {textField?.stringValue = newValue ?? ""}
+        reloadData()
+        selectRow(row)
     }
 }

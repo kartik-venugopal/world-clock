@@ -21,4 +21,5 @@ let statusBarManager: StatusBarManager = .shared
 extension Notification.Name {
     
     static let updateClocks: Notification.Name = Notification.Name("updateClocks")
+    static let clockAddedOrUpdated: Notification.Name = Notification.Name("clockAddedOrUpdated")
 }

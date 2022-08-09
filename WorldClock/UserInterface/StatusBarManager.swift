@@ -40,7 +40,7 @@ class StatusBarManager {
         item2.target = self
         
         statusItem.menu?.addItem(item1)
-        statusItem.menu?.addItem(NSMenuItem.separator())
+        statusItem.menu?.addItem(.separator())
         statusItem.menu?.addItem(item2)
         
         NSApp.setActivationPolicy(.accessory)

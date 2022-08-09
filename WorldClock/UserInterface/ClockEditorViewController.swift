@@ -62,16 +62,11 @@ class ClockEditorViewController: NSViewController, NSMenuDelegate {
         let zoneIndex = sender.indexOfSelectedItem
         guard WCTimeZone.allTimeZones.indices.contains(zoneIndex) else {return}
         
-        let zone = WCTimeZone.allTimeZones[zoneIndex]
-        self.selectedZone = zone
+        selectedZone = WCTimeZone.allTimeZones[zoneIndex]
         txtZoneName.stringValue = selectedZone.humanReadableLocation
     }
     
-    @IBAction func cancelAction(_ sender: Any) {
-        
-        clockEditContext.clear()
-        closeWindow()
-    }
+    private lazy var clockAddedOrUpdatedNotification = Notification(name: .clockAddedOrUpdated, object: self, userInfo: nil)
     
     @IBAction func saveAction(_ sender: Any) {
         
@@ -96,9 +91,14 @@ class ClockEditorViewController: NSViewController, NSMenuDelegate {
             worldClocks.addNewClock(Clock(zone: selectedZone, name: txtZoneName.stringValue))
         }
         
-        let notification: Notification = Notification(name: Notification.Name("clockAddedOrUpdated"), object: self, userInfo: nil)
-        notifCtr.post(notification)
+        notifCtr.post(clockAddedOrUpdatedNotification)
         
+        closeWindow()
+    }
+    
+    @IBAction func cancelAction(_ sender: Any) {
+        
+        clockEditContext.clear()
         closeWindow()
     }
 }
