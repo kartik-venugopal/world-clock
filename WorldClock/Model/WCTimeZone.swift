@@ -12,7 +12,11 @@ struct WCTimeZone: Codable, CustomStringConvertible {
     let timeZone: TimeZone
     
     let index: Int
+    
     let location: String
+    let humanReadableLocation: String
+    let region: String
+    let city: String
     
     let offsetSeconds: Int
     
@@ -22,7 +26,6 @@ struct WCTimeZone: Codable, CustomStringConvertible {
     
     let description: String
     let humanReadableOffset: String
-    let humanReadableLocation: String
     
     func isDST(for date: Date) -> Bool {
         timeZone.isDaylightSavingTime(for: date)
@@ -60,12 +63,26 @@ struct WCTimeZone: Codable, CustomStringConvertible {
         offsetSeconds -= offsetMins * 60
         
         self.location = timeZone.identifier
+        let humanReadableLocation = self.location.replacingOccurrences(of: "_", with: " ")
         
         self.humanReadableOffset = "GMT\(isOffsetNegative ? "-" : "+")\(offsetHours):\(String(format: "%02d", offsetMins))"
-        self.description = "\(location) - \(humanReadableOffset)"
         
-        let split = location.split(separator: "/")
-        self.humanReadableLocation = (split.count >= 2 ? String(split.last!) : location).replacingOccurrences(of: "_", with: " ")
+        let split = humanReadableLocation.split(separator: "/")
+        
+        if split.count >= 2 {
+            
+            self.region = String(split[0..<(split.count - 1)].joined(separator: " > "))
+            self.city = String(split.last!)
+            
+        } else {
+            
+            self.region = location
+            self.city = location
+        }
+        
+        self.humanReadableLocation = humanReadableLocation.replacingOccurrences(of: "/", with: " > ")
+        
+        self.description = "\(region) > \(city)    |    \(humanReadableOffset)"
     }
 }
 

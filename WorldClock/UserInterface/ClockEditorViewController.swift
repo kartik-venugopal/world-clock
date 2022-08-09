@@ -40,7 +40,7 @@ class ClockEditorViewController: NSViewController, NSMenuDelegate {
         } else {
             
             selectedZone = WCTimeZone.allTimeZones[0]
-            txtZoneName.stringValue = selectedZone.humanReadableLocation
+            txtZoneName.stringValue = selectedZone.city
         }
     }
     
@@ -63,7 +63,7 @@ class ClockEditorViewController: NSViewController, NSMenuDelegate {
         guard WCTimeZone.allTimeZones.indices.contains(zoneIndex) else {return}
         
         selectedZone = WCTimeZone.allTimeZones[zoneIndex]
-        txtZoneName.stringValue = selectedZone.humanReadableLocation
+        txtZoneName.stringValue = selectedZone.city
     }
     
     private lazy var clockAddedOrUpdatedNotification = Notification(name: .clockAddedOrUpdated, object: self, userInfo: nil)
