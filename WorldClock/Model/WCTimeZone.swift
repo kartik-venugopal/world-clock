@@ -31,6 +31,10 @@ struct WCTimeZone: Codable, CustomStringConvertible {
         timeZone.isDaylightSavingTime(for: date)
     }
     
+    var usesDST: Bool {
+        timeZone.nextDaylightSavingTimeTransition != nil
+    }
+    
     var nextDSTTransition: Date? {
         timeZone.nextDaylightSavingTimeTransition
     }
