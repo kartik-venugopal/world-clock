@@ -22,8 +22,8 @@ class ClocksViewController: NSViewController {
     
     private let clockEditContext: ClockEditContext = .shared
     
-//    private lazy var dstInfoUpdateTimer: RepeatingTaskExecutor = RepeatingTaskExecutor(intervalMillis: 1000, task: updateDSTInfo, queue: .main)
-
+    private lazy var timer: RepeatingTaskExecutor = RepeatingTaskExecutor(intervalMillis: 1000, task: updateTableDSTInfo, queue: .main)
+    
     override func viewDidLoad() {
         
         super.viewDidLoad()
@@ -36,22 +36,43 @@ class ClocksViewController: NSViewController {
 
         super.viewWillAppear()
         updateButtonStates()
+        
+        checkIfDSTInfoUpdateIsNecessary()
     }
-//
-//    override func viewDidDisappear() {
-//
-//        super.viewDidDisappear()
-//        print("Clocks - VDD")
-//    }
-//
-//    private func updateDSTInfo() {
-//        print("\nUpdating DST info ...")
-//    }
+    
+    override func viewDidDisappear() {
+
+        super.viewDidDisappear()
+        timer.pause()
+    }
+    
+    private func checkIfDSTInfoUpdateIsNecessary() {
+        hasClockThatUsesDST ? timer.startOrResume() : timer.pause()
+    }
+    
+    private var hasClockThatUsesDST: Bool {
+        
+        for zone in worldClocks.clocks.map({$0.zone}) {
+            
+            if zone.usesDST {
+                return true
+            }
+        }
+        
+        return false
+    }
+    
+    private func updateTableDSTInfo() {
+        
+        let rowsThatUseDST: [Int] = worldClocks.clocks.map {$0.zone}.enumerated().filter {$1.usesDST}.map {$0.offset}
+        tableView.reloadData(forRowIndexes: IndexSet(rowsThatUseDST), columnIndexes: IndexSet([3, 4]))
+    }
     
     @objc func clockAddedOrUpdated() {
         
         tableView.reloadData()
         notifCtr.post(name: .updateClocks, object: self)
+        checkIfDSTInfoUpdateIsNecessary()
     }
     
     func updateButtonStates() {
@@ -115,6 +136,7 @@ class ClocksViewController: NSViewController {
         worldClocks.removeClocks(atIndices: selRows)
         tableView.reloadData()
         updateButtonStates()
+        checkIfDSTInfoUpdateIsNecessary()
         
         notifCtr.post(name: .updateClocks, object: self)
     }
@@ -142,9 +164,7 @@ class ClocksViewController: NSViewController {
     }
     
     @IBAction func doneAction(_ sender: Any) {
-        
-        view.window?.windowController?.close()
-        NSApp.setActivationPolicy(.accessory)
+        closeWindow()
     }
 }
 

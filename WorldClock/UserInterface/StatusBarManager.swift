@@ -19,11 +19,24 @@ class StatusBarManager {
     
     private lazy var appVersion: String? = Bundle.main.infoDictionary?["CFBundleShortVersionString"] as? String
     
+    private lazy var timer: RepeatingTaskExecutor = RepeatingTaskExecutor(intervalMillis: 1000, task: doUpdateDisplayedClocks, queue: .main)
+    
     private init() {
         notifCtr.addObserver(self, selector: #selector(clocksUpdated), name: .updateClocks, object: nil)
     }
     
     func showClocksInMenuBar() {
+        
+        setUpMenuBar()
+        
+        updateDisplayedClocks()
+        
+        if worldClocks.numberOfClocks == 0 {
+            showSettings()
+        }
+    }
+    
+    private func setUpMenuBar() {
         
         if let appVersion = self.appVersion {
             statusItem.toolTip = "World Clock v\(appVersion)"
@@ -39,36 +52,30 @@ class StatusBarManager {
         let item2 = NSMenuItem(title: "Quit", action: #selector(quit), keyEquivalent: "")
         item2.target = self
         
-        statusItem.menu?.addItem(item1)
-        statusItem.menu?.addItem(.separator())
-        statusItem.menu?.addItem(item2)
+        if #available(macOS 11.0, *) {
+            
+            item1.image = .settingsIcon
+            item2.image = .quitIcon
+        }
         
+        statusItem.menu?.addItems([item1, .separator(), item2])
         NSApp.setActivationPolicy(.accessory)
-        
-        Timer.scheduledTimer(withTimeInterval: 1, repeats: true) {_ in
-            self.updateClocks()
-        }
-        
-        updateClocks()
-        
-        if worldClocks.numberOfClocks == 0 {
-            showSettings()
-        }
     }
     
-    @objc private func clocksUpdated() {
-        
-        updateClocks()
-        worldClocks.save()
-    }
-    
-    private func updateClocks() {
+    private func updateDisplayedClocks() {
         
         guard worldClocks.numberOfClocks > 0 else {
         
+            timer.pause()
             statusItem.button?.title = "(No clocks configured)"
             return
         }
+        
+        timer.startOrResume()
+        doUpdateDisplayedClocks()
+    }
+    
+    private func doUpdateDisplayedClocks() {
         
         let now = Date()
         
@@ -78,9 +85,13 @@ class StatusBarManager {
         statusItem.button?.title = timeStr
     }
     
-    @objc func showSettings() {
+    @objc private func clocksUpdated() {
         
-        NSApp.setActivationPolicy(.regular)
+        updateDisplayedClocks()
+        worldClocks.save()
+    }
+    
+    @objc func showSettings() {
         
         guard let settingsWindowController = settingsWindowController else {return}
         settingsWindowController.showWindow(self)
@@ -97,5 +108,15 @@ class StatusBarManager {
     
     @objc func quit() {
         NSApp.terminate(self)
+    }
+}
+
+extension NSMenu {
+    
+    func addItems(_ items: [NSMenuItem]) {
+        
+        items.forEach {
+            addItem($0)
+        }
     }
 }

@@ -22,6 +22,7 @@
 		3EB479E028A19587005CBF3C /* UserDefaults+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3EB479DF28A19587005CBF3C /* UserDefaults+Extensions.swift */; };
 		3EB479E228A19702005CBF3C /* Globals.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3EB479E128A19702005CBF3C /* Globals.swift */; };
 		3EB479E428A19AC2005CBF3C /* StatusBarManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3EB479E328A19AC2005CBF3C /* StatusBarManager.swift */; };
+		3EC3C14428A38411009976E4 /* Images.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3EC3C14328A38411009976E4 /* Images.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -42,6 +43,7 @@
 		3EB479DF28A19587005CBF3C /* UserDefaults+Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UserDefaults+Extensions.swift"; sourceTree = "<group>"; };
 		3EB479E128A19702005CBF3C /* Globals.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Globals.swift; sourceTree = "<group>"; };
 		3EB479E328A19AC2005CBF3C /* StatusBarManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StatusBarManager.swift; sourceTree = "<group>"; };
+		3EC3C14328A38411009976E4 /* Images.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Images.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -62,6 +64,7 @@
 				3E88E31427E1043E004677DA /* ClocksViewController.swift */,
 				3E320A5D28A2E7D900DC47BD /* ClocksViewController+TableViewDelegate.swift */,
 				3E88E32827E1340A004677DA /* ClockEditorViewController.swift */,
+				3EC3C14328A38411009976E4 /* Images.swift */,
 			);
 			path = UserInterface;
 			sourceTree = "<group>";
@@ -199,6 +202,7 @@
 				3E88E32227E1051C004677DA /* Clock.swift in Sources */,
 				3E320A6028A2EA2F00DC47BD /* RepeatingTaskExecutor.swift in Sources */,
 				3EB479E228A19702005CBF3C /* Globals.swift in Sources */,
+				3EC3C14428A38411009976E4 /* Images.swift in Sources */,
 				3E88E31527E1043E004677DA /* ClocksViewController.swift in Sources */,
 				3E684B0228A06AD900B2AEAE /* TimeFormat.swift in Sources */,
 				3E88E32927E1340A004677DA /* ClockEditorViewController.swift in Sources */,
