@@ -9,9 +9,15 @@ import AppKit
 
 class ClockEditorViewController: NSViewController, NSMenuDelegate {
     
+    @IBOutlet weak var radioBtnSelectTimeZone: NSButton!
+    @IBOutlet weak var radioBtnSpecifyGMTOffset: NSButton!
+    
     @IBOutlet weak var zonesList: NSPopUpButton!
     @IBOutlet weak var zonesListMenu: NSMenu!
     @IBOutlet weak var txtZoneName: NSTextField!
+    
+    @IBOutlet weak var offsetStepper: NSStepper!
+    @IBOutlet weak var txtOffset: NSTextField!
     
     private var selectedZone: WCTimeZone!
     
@@ -55,6 +61,16 @@ class ClockEditorViewController: NSViewController, NSMenuDelegate {
         } else {
             windowTitle = "Add a Clock"
         }
+        
+        modeSelectionAction(self)
+    }
+    
+    /// Select standard time zone / specify GMT offset
+    @IBAction func modeSelectionAction(_ sender: Any) {
+        
+        zonesList.enableIf(radioBtnSelectTimeZone.state == .on)
+        offsetStepper.enableIf(radioBtnSpecifyGMTOffset.state == .on)
+        txtOffset.enableIf(radioBtnSpecifyGMTOffset.state == .on)
     }
     
     @IBAction func zoneSelectionAction(_ sender: NSPopUpButton) {
@@ -64,6 +80,18 @@ class ClockEditorViewController: NSViewController, NSMenuDelegate {
         
         selectedZone = WCTimeZone.allTimeZones[zoneIndex]
         txtZoneName.stringValue = selectedZone.city
+    }
+    
+    @IBAction func offsetStepperAction(_ sender: Any) {
+        
+        let minsTotal = offsetStepper.integerValue
+        let negative = minsTotal < 0
+        let absMinsTotal = abs(minsTotal)
+        
+        let hours = absMinsTotal / 60
+        let mins = absMinsTotal - (hours * 60)
+        
+        txtOffset.stringValue = "GMT\(negative ? "-" : "+")\(hours):\(String(format: "%02d", mins))"
     }
     
     private lazy var clockAddedOrUpdatedNotification = Notification(name: .clockAddedOrUpdated, object: self, userInfo: nil)
