@@ -7,7 +7,14 @@
 
 import AppKit
 
-extension ClocksViewController: NSTableViewDataSource, NSTableViewDelegate {
+extension ClocksViewController: NSTableViewDataSource {
+    
+    func numberOfRows(in tableView: NSTableView) -> Int {
+        worldClocks.numberOfClocks
+    }
+}
+    
+extension ClocksViewController: NSTableViewDelegate {
     
     // Enables type selection, allowing the user to conveniently and efficiently find a playlist track by typing its display name, which results in the track, if found, being selected within the playlist
     func tableView(_ tableView: NSTableView, typeSelectStringFor tableColumn: NSTableColumn?, row: Int) -> String? {
@@ -29,10 +36,6 @@ extension ClocksViewController: NSTableViewDataSource, NSTableViewDelegate {
             
             return nil
         }
-    }
-    
-    func numberOfRows(in tableView: NSTableView) -> Int {
-        worldClocks.numberOfClocks
     }
     
     func tableView(_ tableView: NSTableView, viewFor tableColumn: NSTableColumn?, row: Int) -> NSView? {

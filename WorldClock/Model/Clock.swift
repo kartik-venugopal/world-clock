@@ -40,3 +40,8 @@ class Clock: Codable {
         return "\(name)\(showDST ? " (DST)" : ""): \(formatter.string(from: date))"
     }
 }
+
+enum ClockType: String, Codable {
+    
+    case standardTimeZone, offset
+}
